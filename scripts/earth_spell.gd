@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-var attack_in_progress = true
+@export var KNOCKBACK : bool = false
+@export var PERSIST : bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play("earth_spell_charge")
@@ -8,12 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	var collision = move_and_collide(velocity*delta)
-	if collision:
-		var collider = collision.get_collider()
-		if collider.is_in_group("Enemy"):
-			collider.take_damage()
-		queue_free()
+	move_and_slide()
 
 func shoot_spell():
 	var current_position = global_position

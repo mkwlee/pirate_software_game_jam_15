@@ -11,5 +11,5 @@ func _ready():
 func _process(delta):
 	var mouse_pos = get_global_mouse_position()
 	var viewport = get_viewport_rect().size
-	print(mouse_pos - player.global_position)
+	#print(mouse_pos - player.global_position)
 	offset = (mouse_pos - player.global_position) / (viewport / 20)

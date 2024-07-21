@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dw61027mtx8bt"]
+[gd_scene load_steps=12 format=3 uid="uid://dw61027mtx8bt"]
 
 [ext_resource type="Script" path="res://scripts/earth_spell.gd" id="1_wgjgm"]
 [ext_resource type="Texture2D" uid="uid://cglj0ffplcxul" path="res://assets/sprites/spells/earth_spell_sprite.png" id="2_vt1ew"]
+[ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="3_y8nt4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ofs2o"]
-radius = 6.0
+radius = 5.0
 
 [sub_resource type="Animation" id="Animation_ywtr1"]
 length = 0.001
@@ -20,6 +21,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpellHurtBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_0v5wb"]
 resource_name = "earth_spell_charge"
@@ -30,10 +43,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4]
+"values": [0, 1, 2, 3, 4, 5]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -48,6 +61,18 @@ tracks/1/keys = {
 "args": [],
 "method": &"shoot_spell"
 }]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpellHurtBox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_thfq1"]
@@ -69,16 +94,20 @@ scale_min = 7.0
 scale_max = 7.0
 scale_curve = SubResource("CurveTexture_sn1fq")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_uq87v"]
+radius = 6.0
+
 [node name="EarthSpell" type="CharacterBody2D"]
 collision_layer = 4
-collision_mask = 9
 motion_mode = 1
+wall_min_slide_angle = 3.14159
 script = ExtResource("1_wgjgm")
+KNOCKBACK = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.501961, 0.27451, 0.105882, 1)
 texture = ExtResource("2_vt1ew")
-hframes = 5
+hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ofs2o")
@@ -94,3 +123,10 @@ show_behind_parent = true
 emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_ftmp3")
+
+[node name="SpellHurtBox" parent="." instance=ExtResource("3_y8nt4")]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpellHurtBox"]
+shape = SubResource("CircleShape2D_uq87v")
+debug_color = Color(0.498039, 0, 0, 0.419608)
