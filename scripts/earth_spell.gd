@@ -1,6 +1,5 @@
-extends Area2D
+extends CharacterBody2D
 
-var velocity : Vector2
 var attack_in_progress = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,8 +7,13 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	position += velocity*delta
+func _physics_process(delta):
+	var collision = move_and_collide(velocity*delta)
+	if collision:
+		var collider = collision.get_collider()
+		if collider.is_in_group("Enemy"):
+			collider.take_damage()
+		queue_free()
 
 func shoot_spell():
 	var current_position = global_position
@@ -19,6 +23,3 @@ func shoot_spell():
 	global_position = current_position
 	velocity = global_position.direction_to(get_global_mouse_position())*50
 	$GPUParticles2D.emitting = true
-	
-func _on_body_entered(body):
-	queue_free()
