@@ -14,7 +14,7 @@ extends CharacterBody2D
 
 var spell_ready = true
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-const spells = [preload("res://scenes/spells/earth_spell.tscn"), preload("res://scenes/spells/air_spell.tscn")]
+#const spells = [preload("res://scenes/spells/earth_spell.tscn"), preload("res://scenes/spells/air_spell.tscn")]
 
 func _ready():
 	#player_sprite.self_modulate = Color("#80461B")
@@ -44,13 +44,13 @@ func _physics_process(delta):
 		player_sprite.scale.x = -1
 		
 	if Input.is_action_pressed("cast_spell_a") and not player_spell_animations.is_playing():
-		player_spell_animations.play("cast_earth_spell")
+		player_spell_animations.play(GameManager.spells[GameManager.spell_a][1])
 	
 	if Input.is_action_pressed("cast_spell_b") and not player_spell_animations.is_playing():
-		player_spell_animations.play("cast_air_spell")
+				player_spell_animations.play(GameManager.spells[GameManager.spell_b][1])
 	move_and_slide()
 
 func cast_spell(spell_type : int, spell_spawn : Vector2):
-	var proj = spells[spell_type].instantiate()
+	var proj = GameManager.spells[spell_type][0].instantiate()
 	proj.position = hand_marker.position+spell_spawn
 	player_sprite.add_child(proj)

@@ -1,0 +1,159 @@
+[gd_scene load_steps=12 format=3 uid="uid://gx72mxikw66q"]
+
+[ext_resource type="Texture2D" uid="uid://hihtenygtnbj" path="res://assets/sprites/spells/fire_spell_sprite.png" id="1_1508e"]
+[ext_resource type="Script" path="res://scripts/fire_spell.gd" id="1_jx3h1"]
+[ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="2_j7oa8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83fiy"]
+size = Vector2(8, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlvpu"]
+size = Vector2(10, 8)
+
+[sub_resource type="Animation" id="Animation_hwlmr"]
+resource_name = "fire_spell_shoot"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot_spell"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpellHurtBox:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ih7dx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpellHurtBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o2ffs"]
+_data = {
+"RESET": SubResource("Animation_ih7dx"),
+"fire_spell_shoot": SubResource("Animation_hwlmr")
+}
+
+[sub_resource type="Curve" id="Curve_p0idb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.748619, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_t8mey"]
+curve = SubResource("Curve_p0idb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncd5a"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_t8mey")
+
+[node name="FireSpell" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_jx3h1")
+DAMAGE = Vector2i(6, 10)
+SPEED = 150
+EXPLODE = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.870588, 0.192157, 0.388235, 1)
+texture = ExtResource("1_1508e")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_83fiy")
+
+[node name="SpellHurtBox" parent="." instance=ExtResource("2_j7oa8")]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpellHurtBox"]
+rotation = 0.00514069
+shape = SubResource("RectangleShape2D_wlvpu")
+debug_color = Color(0.498039, 0, 0, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o2ffs")
+}
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.870588, 0.192157, 0.388235, 1)
+show_behind_parent = true
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_ncd5a")

@@ -9,10 +9,9 @@ extends CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$AnimationPlayer.play("earth_spell_shoot")
+	$AnimationPlayer.play("water_spell_shoot")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	move_and_slide()
 
@@ -22,4 +21,6 @@ func shoot_spell():
 	get_parent().remove_child(self)
 	current_scene.add_child(self)
 	global_position = current_position
+	var test = rad_to_deg(global_position.angle_to_point(get_global_mouse_position())) / 90
+	rotation = global_position.angle_to_point(get_global_mouse_position())
 	velocity = global_position.direction_to(get_global_mouse_position())*SPEED

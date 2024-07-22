@@ -33,6 +33,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_0v5wb"]
 resource_name = "earth_spell_charge"
@@ -74,11 +86,23 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_thfq1"]
 _data = {
 "RESET": SubResource("Animation_ywtr1"),
-"earth_spell_charge": SubResource("Animation_0v5wb")
+"earth_spell_shoot": SubResource("Animation_0v5wb")
 }
 
 [sub_resource type="Curve" id="Curve_cd6p2"]
@@ -102,6 +126,8 @@ collision_layer = 4
 motion_mode = 1
 wall_min_slide_angle = 3.14159
 script = ExtResource("1_wgjgm")
+DAMAGE = Vector2i(18, 24)
+SPEED = 100
 KNOCKBACK = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

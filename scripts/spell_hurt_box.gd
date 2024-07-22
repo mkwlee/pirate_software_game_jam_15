@@ -1,5 +1,5 @@
 extends Area2D
-
+const SPELL_EXPLOSION = preload("res://scenes/spells/spell_explosion.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -12,10 +12,20 @@ func _process(delta):
 			get_parent().queue_free()
 	
 func _on_body_entered(body):
-	print(body.name)
+	var spell = get_parent()
 	if body.is_in_group("Enemy"):
-		body.take_damage(get_parent().velocity*int(get_parent().KNOCKBACK), get_parent().PERSIST)
-		if not get_parent().PERSIST:
-			get_parent().queue_free()
+		body.take_damage(randi_range(spell.DAMAGE.x, spell.DAMAGE.y))
+		
+		if spell.KNOCKBACK:
+			body.push_position(global_position.direction_to(body.global_position), spell.SPEED)
+		
+		if spell.EXPLODE:
+			var explosion = SPELL_EXPLOSION.instantiate()
+			explosion.global_position = global_position
+			get_tree().current_scene.call_deferred("add_child", explosion)
+		
+		if not spell.PERSIST:
+			spell.queue_free()
+			
 	elif body.name == "TileMap":
 		get_parent().queue_free()

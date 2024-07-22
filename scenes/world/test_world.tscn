@@ -24,6 +24,7 @@ sources/1 = SubResource("TileSetAtlasSource_ut3t4")
 [node name="TestWorld" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -1
 tile_set = SubResource("TileSet_nxfy2")
 rendering_quadrant_size = 10
 format = 2

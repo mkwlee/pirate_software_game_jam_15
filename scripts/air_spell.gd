@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
+@export var DAMAGE : Vector2i
+@export var SPEED : int
+
 @export var KNOCKBACK : bool = false
 @export var PERSIST : bool = false
-
-@onready var gpu_particles_2d = $GPUParticles2D
-
+@export var EXPLODE : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play("air_spell_shoot")
@@ -21,5 +22,4 @@ func shoot_spell():
 	global_position = current_position
 	var test = rad_to_deg(global_position.angle_to_point(get_global_mouse_position())) / 90
 	rotation = global_position.angle_to_point(get_global_mouse_position())
-	velocity = global_position.direction_to(get_global_mouse_position())*200
-	gpu_particles_2d.emitting = true
+	velocity = global_position.direction_to(get_global_mouse_position())*SPEED

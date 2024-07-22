@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://clmcmx6titcm3"]
+[gd_scene load_steps=16 format=3 uid="uid://clmcmx6titcm3"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_75l53"]
 [ext_resource type="Texture2D" uid="uid://rtj1ibv05cdf" path="res://assets/sprites/player/player_sprite_test.png" id="2_wo0oc"]
@@ -153,10 +153,48 @@ tracks/0/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_ypxbm"]
+resource_name = "cast_water_spell"
+length = 1.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [2, Vector2(0, 0)],
+"method": &"cast_spell"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_nkiqc"]
+resource_name = "cast_fire_spell"
+length = 0.8
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [3, Vector2(0, 0)],
+"method": &"cast_spell"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_svi16"]
 _data = {
 "cast_air_spell": SubResource("Animation_khmkx"),
-"cast_earth_spell": SubResource("Animation_c1w65")
+"cast_earth_spell": SubResource("Animation_c1w65"),
+"cast_fire_spell": SubResource("Animation_nkiqc"),
+"cast_water_spell": SubResource("Animation_ypxbm")
 }
 
 [sub_resource type="Curve" id="Curve_lb3uk"]
@@ -173,6 +211,7 @@ scale_max = 5.0
 scale_curve = SubResource("CurveTexture_udsml")
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_75l53")
