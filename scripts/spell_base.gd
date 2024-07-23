@@ -19,7 +19,18 @@ func shoot_spell():
 	change_parent_to_scene()
 	rotation = global_position.angle_to_point(get_global_mouse_position())
 	var direction = global_position.direction_to(get_global_mouse_position())
-	velocity = direction*SPEED
+	if SHAPE == Global.SPELL_TYPE.AIR_SPELL:
+		velocity = direction*SPEED*2
+	elif MOD == Global.SPELL_TYPE.AIR_SPELL:
+		velocity = direction*SPEED*1.5
+	else:
+		velocity = direction*SPEED
+		
+	if SHAPE == Global.SPELL_TYPE.WATER_SPELL:
+		pass
+	elif MOD == Global.SPELL_TYPE.WATER_SPELL:
+		call_deferred("set_water_mod_timer")
+
 
 func change_parent_to_scene():
 	var current_position = global_position
@@ -27,3 +38,8 @@ func change_parent_to_scene():
 	get_parent().remove_child(self)
 	current_scene.add_child(self)
 	global_position = current_position
+
+func set_water_mod_timer():
+	await get_tree().create_timer(1.5).timeout
+	queue_free()
+	

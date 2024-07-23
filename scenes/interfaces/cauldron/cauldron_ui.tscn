@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8so0tlulvo3h"]
+
+[ext_resource type="Texture2D" uid="uid://d0bjdhrqo0knt" path="res://assets/sprites/UI/cauldron/cauldron_ui_back.png" id="1_jwdti"]
+[ext_resource type="Script" path="res://scripts/cauldron_ui.gd" id="1_rs80c"]
+[ext_resource type="PackedScene" uid="uid://dtor6cunnfdhg" path="res://scenes/interfaces/cauldron/cauldron_spell.tscn" id="3_0a1ns"]
+[ext_resource type="Texture2D" uid="uid://btrmo64yso44w" path="res://assets/sprites/UI/spells/spell_slot_recharge.png" id="4_fec16"]
+[ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="5_po70m"]
+
+[node name="CauldronUI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_rs80c")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -39.0
+offset_right = 81.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(10, 10)
+pivot_offset = Vector2(81, 39)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_jwdti")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SpellListContainer" type="HFlowContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="SpellContainer" type="HFlowContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="SpellAContainer" parent="TextureRect/MarginContainer/SpellContainer" instance=ExtResource("3_0a1ns")]
+layout_mode = 2
+texture = ExtResource("4_fec16")
+panel_type = 1
+
+[node name="SpellBContainer" parent="TextureRect/MarginContainer/SpellContainer" instance=ExtResource("3_0a1ns")]
+layout_mode = 2
+texture = ExtResource("4_fec16")
+panel_type = 2
+
+[node name="ButtonContainer" type="HBoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="ResetButton" type="Button" parent="TextureRect/MarginContainer/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_po70m")
+theme_override_font_sizes/font_size = 4
+text = "RESET"
+
+[node name="ExitButton" type="Button" parent="TextureRect/MarginContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("5_po70m")
+theme_override_font_sizes/font_size = 4
+text = "Exit"
+
+[connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ExitButton" to="." method="_on_button_pressed"]

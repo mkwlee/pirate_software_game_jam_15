@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2vko30ofwo5"]
+
+[ext_resource type="Script" path="res://scripts/game_ui.gd" id="1_b6q1g"]
+[ext_resource type="Texture2D" uid="uid://4xkf084sa0qp" path="res://assets/sprites/UI/spells/spell_slot.png" id="1_x6e4n"]
+[ext_resource type="Texture2D" uid="uid://cfudcktiego7h" path="res://assets/sprites/UI/health_bar/health_bar_back.png" id="2_gudfh"]
+[ext_resource type="Texture2D" uid="uid://llfvnti6lwnu" path="res://assets/sprites/UI/health_bar/health_bar_front.png" id="3_fyt8g"]
+[ext_resource type="Texture2D" uid="uid://btrmo64yso44w" path="res://assets/sprites/UI/spells/spell_slot_recharge.png" id="5_ovijb"]
+
+[node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_b6q1g")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1728.0
+offset_bottom = -972.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(10, 10)
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+value = 69.0
+texture_under = ExtResource("2_gudfh")
+texture_progress = ExtResource("3_fyt8g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_x6e4n")
+
+[node name="SpellAIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpellAProgress" type="TextureProgressBar" parent="MarginContainer/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 60.0
+step = 0.01
+fill_mode = 5
+texture_progress = ExtResource("5_ovijb")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_x6e4n")
+
+[node name="SpellBIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpellBProgress" type="TextureProgressBar" parent="MarginContainer/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.01
+fill_mode = 5
+texture_progress = ExtResource("5_ovijb")

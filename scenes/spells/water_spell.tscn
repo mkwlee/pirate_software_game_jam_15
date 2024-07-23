@@ -1,11 +1,50 @@
 [gd_scene load_steps=12 format=3 uid="uid://byeah6r2aptnm"]
 
 [ext_resource type="Texture2D" uid="uid://cncdeus6urtrv" path="res://assets/sprites/spells/water_spell_sprite.png" id="1_rx7hy"]
-[ext_resource type="Script" path="res://scripts/water_spell.gd" id="1_tj2lm"]
+[ext_resource type="Script" path="res://scripts/spell_base.gd" id="1_uqfiy"]
 [ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="2_34fdy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faf4u"]
 size = Vector2(8, 30)
+
+[sub_resource type="Animation" id="Animation_wr2px"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpellHurtBox:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_7yoeg"]
 resource_name = "water_spell_shoot"
@@ -62,49 +101,10 @@ tracks/3/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_wr2px"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SpellHurtBox:monitoring")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("GPUParticles2D:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8vsde"]
 _data = {
 "RESET": SubResource("Animation_wr2px"),
-"water_spell_shoot": SubResource("Animation_7yoeg")
+"shoot": SubResource("Animation_7yoeg")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvdj4"]
@@ -126,14 +126,15 @@ scale_max = 3.0
 scale_curve = SubResource("CurveTexture_kf3if")
 
 [node name="WaterSpell" type="CharacterBody2D"]
+modulate = Color(0.376471, 0.509804, 0.713726, 1)
 collision_layer = 4
-script = ExtResource("1_tj2lm")
+script = ExtResource("1_uqfiy")
 DAMAGE = Vector2i(12, 16)
 SPEED = 50
-PERSIST = true
+SHAPE = 2
+MOD = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.376471, 0.509804, 0.713726, 1)
 texture = ExtResource("1_rx7hy")
 hframes = 4
 
@@ -153,7 +154,6 @@ shape = SubResource("RectangleShape2D_gvdj4")
 debug_color = Color(0.498039, 0, 0, 0.419608)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0.376471, 0.509804, 0.713726, 1)
 show_behind_parent = true
 emitting = false
 amount = 64

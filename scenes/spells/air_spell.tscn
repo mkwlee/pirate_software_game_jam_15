@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://bkcc586wd2kcw"]
 
 [ext_resource type="Texture2D" uid="uid://cr5sxbpambfeg" path="res://assets/sprites/spells/air_spell_sprite.png" id="1_1arsp"]
-[ext_resource type="Script" path="res://scripts/air_spell.gd" id="1_wujfn"]
+[ext_resource type="Script" path="res://scripts/spell_base.gd" id="1_emfgq"]
 [ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="3_stlsq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b8125"]
@@ -104,7 +104,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bixa4"]
 _data = {
 "RESET": SubResource("Animation_rke4s"),
-"air_spell_shoot": SubResource("Animation_fhf2r")
+"shoot": SubResource("Animation_fhf2r")
 }
 
 [sub_resource type="Curve" id="Curve_r1yvw"]
@@ -116,8 +116,6 @@ curve = SubResource("Curve_r1yvw")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1a6x2"]
 emission_shape_offset = Vector3(-1, 0, 0)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1.5, 1)
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_xquq1")
 turbulence_noise_speed = Vector3(0.5, 0.5, 0.5)
@@ -126,15 +124,17 @@ turbulence_noise_speed = Vector3(0.5, 0.5, 0.5)
 size = Vector2(4, 6)
 
 [node name="AirSpell" type="CharacterBody2D"]
+modulate = Color(0.517647, 0.533333, 0.517647, 1)
 collision_layer = 4
 motion_mode = 1
 wall_min_slide_angle = 3.14159
-script = ExtResource("1_wujfn")
+script = ExtResource("1_emfgq")
 DAMAGE = Vector2i(2, 4)
 SPEED = 200
+SHAPE = 1
+MOD = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.517647, 0.533333, 0.517647, 1)
 texture = ExtResource("1_1arsp")
 hframes = 3
 
@@ -147,7 +147,6 @@ libraries = {
 }
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0.517647, 0.533333, 0.517647, 1)
 show_behind_parent = true
 emitting = false
 amount = 64

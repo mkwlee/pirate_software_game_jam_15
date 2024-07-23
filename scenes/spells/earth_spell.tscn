@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dw61027mtx8bt"]
 
-[ext_resource type="Script" path="res://scripts/earth_spell.gd" id="1_wgjgm"]
+[ext_resource type="Script" path="res://scripts/spell_base.gd" id="1_0rfwh"]
 [ext_resource type="Texture2D" uid="uid://cglj0ffplcxul" path="res://assets/sprites/spells/earth_spell_sprite.png" id="2_vt1ew"]
 [ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="3_y8nt4"]
 
@@ -102,7 +102,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_thfq1"]
 _data = {
 "RESET": SubResource("Animation_ywtr1"),
-"earth_spell_shoot": SubResource("Animation_0v5wb")
+"shoot": SubResource("Animation_0v5wb")
 }
 
 [sub_resource type="Curve" id="Curve_cd6p2"]
@@ -122,16 +122,15 @@ scale_curve = SubResource("CurveTexture_sn1fq")
 radius = 6.0
 
 [node name="EarthSpell" type="CharacterBody2D"]
+modulate = Color(0.501961, 0.27451, 0.105882, 1)
 collision_layer = 4
 motion_mode = 1
 wall_min_slide_angle = 3.14159
-script = ExtResource("1_wgjgm")
+script = ExtResource("1_0rfwh")
 DAMAGE = Vector2i(18, 24)
 SPEED = 100
-KNOCKBACK = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.501961, 0.27451, 0.105882, 1)
 texture = ExtResource("2_vt1ew")
 hframes = 6
 
@@ -144,7 +143,6 @@ libraries = {
 }
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0.501961, 0.27451, 0.105882, 1)
 show_behind_parent = true
 emitting = false
 amount = 16

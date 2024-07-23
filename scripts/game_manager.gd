@@ -1,24 +1,18 @@
 extends Node
 
-var spell_a = 0
-var spell_b = 1
+#Determines (Spell, Mod) : (SPELL_TYPE, SPELL_TYPE)
+# Mod = -1 means no mod
+var spell_a : Vector2i = Vector2i(Global.SPELL_TYPE.EARTH_SPELL, Global.SPELL_TYPE.EARTH_SPELL)
+var spell_b : Vector2i = Vector2i(Global.SPELL_TYPE.FIRE_SPELL, Global.SPELL_TYPE.FIRE_SPELL)
 
-# [spell instance, spell animation name]
-const spells = [
-[preload("res://scenes/spells/earth_spell.tscn"), "cast_earth_spell"], 
-[preload("res://scenes/spells/air_spell.tscn"), "cast_air_spell"],
-[preload("res://scenes/spells/water_spell.tscn"), "cast_water_spell"],
-[preload("res://scenes/spells/fire_spell.tscn"), "cast_fire_spell"]
-]
-
+var unlocked_spells = [1, 1, 1, 1]
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta) -> void:
+	pass
 	
-	if Input.is_action_just_pressed("dash"):
-		spell_a = (spell_a + 1) % 4
-		spell_b = (spell_b + 1) % 4

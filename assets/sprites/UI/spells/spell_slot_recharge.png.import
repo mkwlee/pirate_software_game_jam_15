@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt6ifj61fxey2"
-path="res://.godot/imported/tileset_test.png-1d3789ebf8de33c33f99665edf2a0ec1.ctex"
+uid="uid://btrmo64yso44w"
+path="res://.godot/imported/spell_slot_recharge.png-b0c254f013bc0acdb021d4720accec57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/world/tileset_test.png"
-dest_files=["res://.godot/imported/tileset_test.png-1d3789ebf8de33c33f99665edf2a0ec1.ctex"]
+source_file="res://assets/sprites/UI/spells/spell_slot_recharge.png"
+dest_files=["res://.godot/imported/spell_slot_recharge.png-b0c254f013bc0acdb021d4720accec57.ctex"]
 
 [params]
 

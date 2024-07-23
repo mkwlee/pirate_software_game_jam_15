@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgwo78mwwtw66"]
+
+[ext_resource type="Texture2D" uid="uid://dr02wsieupept" path="res://assets/sprites/environment/cauldron.png" id="1_it4dj"]
+[ext_resource type="Script" path="res://scripts/cauldron.gd" id="1_pu8xr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_emo1t"]
+size = Vector2(30, 30)
+
+[node name="Cauldron" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_pu8xr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_it4dj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_emo1t")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

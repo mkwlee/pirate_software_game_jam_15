@@ -7,25 +7,50 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if get_parent().PERSIST and get_parent().velocity != Vector2(0,0):
+	if get_parent().velocity != Vector2(0,0):
 		if get_parent().get_real_velocity().length() < 1:
 			get_parent().queue_free()
 	
 func _on_body_entered(body):
 	var spell = get_parent()
 	if body.is_in_group("Enemy"):
-		body.take_damage(randi_range(spell.DAMAGE.x, spell.DAMAGE.y))
+		var damage = Vector2()
+		damage.x = randi_range(spell.DAMAGE.x/2, spell.DAMAGE.y/2)
+		damage.y = randi_range(spell.DAMAGE.x/2, spell.DAMAGE.y/2)
+		#print(["HURT", damage.x, damage.y, damage.x+damage.y])
+		body.take_damage(damage.x+damage.y)
 		
-		if spell.KNOCKBACK:
-			body.push_position(global_position.direction_to(body.global_position), spell.SPEED)
+		#EARTH_SPELL knockback
+		if spell.SHAPE == Global.SPELL_TYPE.EARTH_SPELL:
+			body.push_position(global_position.direction_to(body.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
+			(spell.DAMAGE.y*10)+(spell.SPEED*0.5))
+		elif spell.MOD == Global.SPELL_TYPE.EARTH_SPELL:
+			body.push_position(global_position.direction_to(body.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
+			(spell.DAMAGE.x*10)+(spell.SPEED*0.2))
+			
 		
-		if spell.EXPLODE:
-			var explosion = SPELL_EXPLOSION.instantiate()
-			explosion.global_position = global_position
-			get_tree().current_scene.call_deferred("add_child", explosion)
+		#FIRE_SPELL explosion
+		if spell.SHAPE == Global.SPELL_TYPE.FIRE_SPELL:
+			create_explosion(body, false, spell.modulate)
+		elif spell.MOD == Global.SPELL_TYPE.FIRE_SPELL:
+			create_explosion(body, true, spell.modulate)
 		
-		if not spell.PERSIST:
+		#WATER_SPELL persist
+		if spell.SHAPE == Global.SPELL_TYPE.WATER_SPELL:
+			pass
+		elif spell.MOD == Global.SPELL_TYPE.WATER_SPELL:
+			pass
+		else:
 			spell.queue_free()
 			
 	elif body.name == "TileMap":
 		get_parent().queue_free()
+
+func create_explosion(body, mod, color):
+	var explosion = SPELL_EXPLOSION.instantiate()
+	explosion.global_position = body.global_position
+	explosion.mod = mod
+	explosion.color = color
+	explosion.enemy = body
+	get_tree().current_scene.call_deferred("add_child", explosion)
+	
