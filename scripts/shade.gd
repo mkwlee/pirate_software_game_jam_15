@@ -5,19 +5,29 @@ extends CharacterBody2D
 @onready var behavior_player: AnimationPlayer = $BehaviorPlayer
 @onready var player: CharacterBody2D = %Player
 @onready var enemy_detection_ray: RayCast2D = $EnemyDetectionRay
-
-
 @onready var sprite: Sprite2D = $Sprite2D
+
+const HEALTH_INDICATOR = preload("res://scenes/enemies/health_indicator.tscn")
+
+#Stats
 @export var SPEED : int
-enum STATE {IDLE, WANDER, FOLLOW, ATTACK, STAGGER}
+@export var HEALTH : int
+
+
+#State based
+enum STATE {IDLE, WANDER, FOLLOW, ATTACK, STAGGER, DYING}
 @export var ACTION = STATE.IDLE
 var PREV_ACTION = STATE.IDLE
 
+#Universal
 var knockback_speed = Vector2(0, 0)
+var can_stagger = true
+var health_bar : Node2D = null
 
+#Shade Unique
 var spawn_area : Array
 var wander_target : Vector2
-var can_stagger = true
+
 
 func _ready() -> void:
 	spawn_area.append(Vector2(global_position.x-30, global_position.y-30))
@@ -118,3 +128,19 @@ func follow():
 func stagger():
 	PREV_ACTION = ACTION
 	velocity = Vector2(0, 0)
+
+func take_damage(damage):
+	if ACTION != STATE.DYING:
+		if health_bar == null:
+			health_bar = HEALTH_INDICATOR.instantiate()
+			health_bar.position = Vector2(0, -(sprite.texture.get_size().y))
+			add_child(health_bar)
+		HEALTH -= damage
+		health_bar.change_health(-damage)
+
+func is_dead():
+	if HEALTH < 1:
+		health_bar.queue_free()
+		velocity = Vector2(0, 0)
+		knockback_speed = Vector2(0, 0)
+		behavior_player.play("DYING")

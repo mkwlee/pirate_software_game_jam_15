@@ -73,15 +73,18 @@ size = Vector2(6, 10)
 
 [node name="TestDummy" type="CharacterBody2D"]
 z_index = 1
+y_sort_enabled = true
 collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_jyg7e")
+HEALTH = 300
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
 texture = ExtResource("1_8k73k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
+position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_ru8po")
 
 [node name="DamagePlayer" type="AnimationPlayer" parent="."]
@@ -91,6 +94,7 @@ libraries = {
 }
 
 [node name="EnemyHitBox" parent="." instance=ExtResource("3_vlbp7")]
+position = Vector2(0, -5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
 shape = SubResource("RectangleShape2D_3gnxj")

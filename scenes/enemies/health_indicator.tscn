@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://0g4p2p8n323q"]
+
+[ext_resource type="Script" path="res://scripts/health_indicator.gd" id="1_qsq8j"]
+[ext_resource type="Texture2D" uid="uid://buggrxfj8qvih" path="res://assets/sprites/enemies/health/enemy_health_bar_back.png" id="1_u25ek"]
+[ext_resource type="Texture2D" uid="uid://t2iei2te6yji" path="res://assets/sprites/enemies/health/enemy_health_bar_change.png" id="2_5bkr1"]
+[ext_resource type="Texture2D" uid="uid://dotyc5xxd6gh1" path="res://assets/sprites/enemies/health/enemy_health_bar.png" id="3_p6h6h"]
+
+[node name="HealthIndicator" type="Node2D"]
+script = ExtResource("1_qsq8j")
+
+[node name="HealthBarContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -5.0
+offset_top = -3.0
+offset_right = -5.0
+offset_bottom = -3.0
+size_flags_vertical = 0
+
+[node name="HealthChangeBar" type="TextureProgressBar" parent="HealthBarContainer"]
+offset_right = 10.0
+offset_bottom = 3.0
+step = 0.1
+value = 100.0
+texture_under = ExtResource("1_u25ek")
+texture_progress = ExtResource("2_5bkr1")
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthBarContainer"]
+offset_right = 10.0
+offset_bottom = 3.0
+step = 0.1
+value = 100.0
+texture_progress = ExtResource("3_p6h6h")

@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	if active:
 		for area in get_overlapping_areas():
 			if area.is_in_group("Player"):
-				area.take_damage(5)
+				area.take_damage(10)
 				active = false
 
 
