@@ -269,4 +269,4 @@ libraries = {
 "": SubResource("AnimationLibrary_3ys27")
 }
 
-[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

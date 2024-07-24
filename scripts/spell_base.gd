@@ -40,6 +40,6 @@ func change_parent_to_scene():
 	global_position = current_position
 
 func set_water_mod_timer():
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1).timeout
 	queue_free()
 	

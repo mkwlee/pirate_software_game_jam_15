@@ -28,6 +28,8 @@ window/size/mode=2
 window/size/window_width_override=960
 window/size/window_height_override=540
 window/stretch/mode="canvas_items"
+mouse_cursor/custom_image="res://assets/sprites/UI/cursor/combat_cursor.png"
+mouse_cursor/custom_image_hotspot=Vector2(25, 25)
 
 [editor]
 
@@ -87,6 +89,12 @@ interact={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Player Projectiles"
 2d_physics/layer_4="Enemies"
+2d_physics/layer_5="Movement"
+2d_physics/layer_6="Interactable"
+
+[navigation]
+
+2d/default_edge_connection_margin=10.0
 
 [physics]
 

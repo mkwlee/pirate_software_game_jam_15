@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://clmcmx6titcm3"]
+[gd_scene load_steps=18 format=3 uid="uid://clmcmx6titcm3"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_75l53"]
 [ext_resource type="Texture2D" uid="uid://rtj1ibv05cdf" path="res://assets/sprites/player/player_sprite_test.png" id="2_wo0oc"]
+[ext_resource type="PackedScene" uid="uid://bd2q7v0rrkdor" path="res://scenes/player/player_hit_box.tscn" id="3_wmy7a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u21qi"]
 radius = 2.0
@@ -224,9 +225,14 @@ gravity = Vector3(0, 0, 0)
 scale_max = 5.0
 scale_curve = SubResource("CurveTexture_udsml")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jw7l2"]
+radius = 3.0
+height = 10.0
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
-collision_layer = 2
+y_sort_enabled = true
+collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_75l53")
 
@@ -263,3 +269,8 @@ process_material = SubResource("ParticleProcessMaterial_36wph")
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="PlayerHitBox" parent="." instance=ExtResource("3_wmy7a")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
+shape = SubResource("CapsuleShape2D_jw7l2")

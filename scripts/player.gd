@@ -6,15 +6,25 @@ extends CharacterBody2D
 @onready var player_movement_animations = $PlayerMovementAnimations
 @onready var player_spell_animations = $PlayerSpellAnimations
 
-
+@export var HEALTH : int = 100
 @export var SPEED : int = 50
 
+signal health_change_signal(new_health)
+
 var current_spell
+var new_color : Color = Color.WHITE
+var color_change_str = 0.1
 
 func _ready():
 	#player_sprite.self_modulate = Color("#80461B")
 	pass
-	
+
+func _process(delta: float) -> void:
+	if player_sprite.self_modulate != new_color:
+		player_sprite.self_modulate = lerp(player_sprite.self_modulate, new_color, color_change_str)
+		color_change_str += color_change_str*delta*2
+	else:
+		color_change_str = 0.1
 func _physics_process(delta):
 	
 	# Movement
@@ -43,12 +53,14 @@ func _physics_process(delta):
 	if Input.is_action_pressed("cast_spell_a") and not player_spell_animations.is_playing():
 		current_spell = GameManager.spell_a
 		player_spell_animations.play(Global.spells[GameManager.spell_a.x][1])
-	
+		new_color = Global.spell_colors[GameManager.spell_a.y]
+		
 	# Cast SPELL B
 	if Input.is_action_pressed("cast_spell_b") and not player_spell_animations.is_playing():
 		current_spell = GameManager.spell_b
 		player_spell_animations.play(Global.spells[GameManager.spell_b.x][1])
-
+		new_color = Global.spell_colors[GameManager.spell_b.y]
+		
 func cast_spell(spell_spawn : Vector2):
 	var proj = Global.spells[current_spell.x][0].instantiate()
 	proj.position = hand_marker.position+spell_spawn
@@ -62,3 +74,7 @@ func cast_spell(spell_spawn : Vector2):
 		%GUI.set_spell_cooldown(0, player_spell_animations.current_animation_length)
 	elif current_spell == GameManager.spell_b:
 		%GUI.set_spell_cooldown(1, player_spell_animations.current_animation_length)
+
+func change_health(amount):
+	HEALTH += amount
+	health_change_signal.emit(HEALTH)

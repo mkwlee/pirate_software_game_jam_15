@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://5myajunwok3v" path="res://scenes/spells/spell_hurt_box.tscn" id="2_34fdy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_faf4u"]
-size = Vector2(8, 30)
+size = Vector2(8, 8)
 
 [sub_resource type="Animation" id="Animation_wr2px"]
 length = 0.001

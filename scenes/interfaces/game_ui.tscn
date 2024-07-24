@@ -23,11 +23,11 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="MarginContainer"]
+[node name="HealthBar" type="TextureProgressBar" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-value = 69.0
+value = 100.0
 texture_under = ExtResource("2_gudfh")
 texture_progress = ExtResource("3_fyt8g")
 

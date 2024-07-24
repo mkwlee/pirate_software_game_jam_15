@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5v301fqi7c4p"]
+[gd_scene load_steps=9 format=3 uid="uid://c5v301fqi7c4p"]
 
 [ext_resource type="Texture2D" uid="uid://crkdjeh7pvil2" path="res://assets/sprites/enemies/test_dummy_sprite.png" id="1_8k73k"]
-[ext_resource type="Script" path="res://scripts/test_dummy.gd" id="1_sshcm"]
+[ext_resource type="Script" path="res://scripts/enemy_base.gd" id="1_jyg7e"]
+[ext_resource type="PackedScene" uid="uid://be0wi76cyky1g" path="res://scenes/enemies/enemy_hit_box.tscn" id="3_vlbp7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3oeo"]
-size = Vector2(6, 10)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ru8po"]
+radius = 2.0
 
 [sub_resource type="Animation" id="Animation_dm1y6"]
 length = 0.001
@@ -67,20 +68,30 @@ _data = {
 "take_damage": SubResource("Animation_byhda")
 }
 
-[node name="TestDummy" type="CharacterBody2D" groups=["Enemy"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gnxj"]
+size = Vector2(6, 10)
+
+[node name="TestDummy" type="CharacterBody2D"]
 z_index = 1
-collision_layer = 8
-script = ExtResource("1_sshcm")
+collision_layer = 16
+motion_mode = 1
+script = ExtResource("1_jyg7e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_8k73k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_o3oeo")
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_ru8po")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="DamagePlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
 libraries = {
 "": SubResource("AnimationLibrary_k2s6f")
 }
+
+[node name="EnemyHitBox" parent="." instance=ExtResource("3_vlbp7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
+shape = SubResource("RectangleShape2D_3gnxj")
+debug_color = Color(0, 0.63754, 0.390731, 0.42)

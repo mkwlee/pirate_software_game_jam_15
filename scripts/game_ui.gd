@@ -4,6 +4,10 @@ extends CanvasLayer
 	[$MarginContainer/HBoxContainer/TextureRect/SpellAIcon, $MarginContainer/HBoxContainer/TextureRect/SpellAProgress],
 	[$MarginContainer/HBoxContainer/TextureRect2/SpellBIcon, $MarginContainer/HBoxContainer/TextureRect2/SpellBProgress]
 ]
+@onready var health_bar: TextureProgressBar = $MarginContainer/HealthBar
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_spell_slots()
@@ -23,3 +27,7 @@ func set_spell_slots():
 	for slot in range(0, 2):
 		spell_slots[slot][0].texture = Global.spell_icons[spell_array[slot].x]
 		spell_slots[slot][0].modulate = Global.spell_colors[spell_array[slot].y]
+
+
+func _on_player_health_change_signal(new_health: Variant) -> void:
+	health_bar.value = new_health

@@ -10,30 +10,31 @@ func _process(delta):
 	if get_parent().velocity != Vector2(0,0):
 		if get_parent().get_real_velocity().length() < 1:
 			get_parent().queue_free()
-	
-func _on_body_entered(body):
+
+
+func _on_area_entered(area):
 	var spell = get_parent()
-	if body.is_in_group("Enemy"):
+	if area.is_in_group("Enemy"):
 		var damage = Vector2()
 		damage.x = randi_range(spell.DAMAGE.x/2, spell.DAMAGE.y/2)
 		damage.y = randi_range(spell.DAMAGE.x/2, spell.DAMAGE.y/2)
 		#print(["HURT", damage.x, damage.y, damage.x+damage.y])
-		body.take_damage(damage.x+damage.y)
+		area.take_damage(damage.x+damage.y)
 		
 		#EARTH_SPELL knockback
 		if spell.SHAPE == Global.SPELL_TYPE.EARTH_SPELL:
-			body.push_position(global_position.direction_to(body.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
-			(spell.DAMAGE.y*10)+(spell.SPEED*0.5))
+			area.push_position(global_position.direction_to(area.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
+			300)
 		elif spell.MOD == Global.SPELL_TYPE.EARTH_SPELL:
-			body.push_position(global_position.direction_to(body.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
-			(spell.DAMAGE.x*10)+(spell.SPEED*0.2))
+			area.push_position(global_position.direction_to(area.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
+			150)
 			
 		
 		#FIRE_SPELL explosion
 		if spell.SHAPE == Global.SPELL_TYPE.FIRE_SPELL:
-			create_explosion(body, false, spell.modulate)
+			create_explosion(area, false, spell.modulate)
 		elif spell.MOD == Global.SPELL_TYPE.FIRE_SPELL:
-			create_explosion(body, true, spell.modulate)
+			create_explosion(area, true, spell.modulate)
 		
 		#WATER_SPELL persist
 		if spell.SHAPE == Global.SPELL_TYPE.WATER_SPELL:
@@ -42,15 +43,24 @@ func _on_body_entered(body):
 			pass
 		else:
 			spell.queue_free()
-			
-	elif body.name == "TileMap":
-		get_parent().queue_free()
 
-func create_explosion(body, mod, color):
+func create_explosion(area, mod, color):
 	var explosion = SPELL_EXPLOSION.instantiate()
-	explosion.global_position = body.global_position
+	explosion.global_position = area.global_position
 	explosion.mod = mod
 	explosion.color = color
-	explosion.enemy = body
+	explosion.enemy = area
 	get_tree().current_scene.call_deferred("add_child", explosion)
 	
+
+
+func _on_body_entered(body: Node2D) -> void:
+	var spell = get_parent()
+	if body.name == "TileMap":
+		#FIRE_SPELL explosion
+		if spell.SHAPE == Global.SPELL_TYPE.FIRE_SPELL:
+			create_explosion(spell, false, spell.modulate)
+		elif spell.MOD == Global.SPELL_TYPE.FIRE_SPELL:
+			create_explosion(spell, true, spell.modulate)
+		
+		get_parent().queue_free()
