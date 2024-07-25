@@ -72,8 +72,10 @@ func _physics_process(delta):
 				if global_position.distance_to(player.global_position) > 120: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
-				elif global_position.distance_to(player.global_position) < 10:
-					behavior_player.play("ATTACK")
+				elif $Sprite2D/EnemyHurtBox.has_overlapping_areas():
+					for area in $Sprite2D/EnemyHurtBox.get_overlapping_areas():
+						if area.is_in_group("Player"):
+							behavior_player.play("ATTACK")
 				else:
 					behavior_player.play("FOLLOW")
 			

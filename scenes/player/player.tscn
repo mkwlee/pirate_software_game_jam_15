@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bd2q7v0rrkdor" path="res://scenes/player/player_hit_box.tscn" id="3_wmy7a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u21qi"]
-radius = 2.0
+radius = 1.0
 
 [sub_resource type="Animation" id="Animation_32605"]
 length = 0.001
@@ -225,13 +225,13 @@ gravity = Vector3(0, 0, 0)
 scale_max = 5.0
 scale_curve = SubResource("CurveTexture_udsml")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jw7l2"]
-radius = 3.0
-height = 10.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7axn"]
+size = Vector2(4, 7)
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
+position = Vector2(0, -5)
 collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_75l53")
@@ -246,7 +246,7 @@ frame = 1
 position = Vector2(5, -1)
 
 [node name="MovementCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
+position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_u21qi")
 
 [node name="PlayerMovementAnimations" type="AnimationPlayer" parent="."]
@@ -273,4 +273,6 @@ one_shot = true
 [node name="PlayerHitBox" parent="." instance=ExtResource("3_wmy7a")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
-shape = SubResource("CapsuleShape2D_jw7l2")
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_p7axn")
+debug_color = Color(0, 0.63754, 0.390731, 0.42)
