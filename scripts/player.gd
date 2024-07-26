@@ -25,7 +25,8 @@ func _process(delta: float) -> void:
 		color_change_str += color_change_str*delta*2
 	else:
 		color_change_str = 0.1
-func _physics_process(delta):
+		
+func _physics_process(_delta) -> void:
 	
 	# Movement
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -61,7 +62,7 @@ func _physics_process(delta):
 		player_spell_animations.play(Global.spells[GameManager.spell_b.x][1])
 		new_color = Global.spell_colors[GameManager.spell_b.y]
 		
-func cast_spell(spell_spawn : Vector2):
+func cast_spell(spell_spawn : Vector2) -> void:
 	var proj = Global.spells[current_spell.x][0].instantiate()
 	proj.position = hand_marker.position+spell_spawn
 	proj.SHAPE = current_spell.x
@@ -75,6 +76,6 @@ func cast_spell(spell_spawn : Vector2):
 	elif current_spell == GameManager.spell_b:
 		%GUI.set_spell_cooldown(1, player_spell_animations.current_animation_length)
 
-func change_health(amount):
+func change_health(amount) -> void:
 	HEALTH += amount
 	health_change_signal.emit(HEALTH)

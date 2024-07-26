@@ -12,7 +12,7 @@ var enemy
 func _ready() -> void:
 	enemy = get_parent()
 
-func take_damage(damage : int):
+func take_damage(damage : int) -> void:
 	if CAN_BE_DAMAGED:
 		var dmg = DAMAGE_INDICATOR.instantiate()
 		dmg.position = Vector2(randi_range(-8, 8), randi_range(-8, 8))
@@ -28,6 +28,6 @@ func take_damage(damage : int):
 		if enemy.can_stagger:
 			enemy.behavior_player.play("STAGGER")
 		
-func push_position(direction, speed):
+func push_position(direction, speed) -> void:
 	if CAN_BE_DAMAGED:
 		enemy.knockback_speed = direction*speed

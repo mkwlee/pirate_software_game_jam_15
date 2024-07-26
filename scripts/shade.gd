@@ -6,6 +6,8 @@ extends CharacterBody2D
 @onready var player: CharacterBody2D = %Player
 @onready var enemy_detection_ray: RayCast2D = $EnemyDetectionRay
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var enemy_hurt_box = $Sprite2D/EnemyHurtBox
+
 
 const HEALTH_INDICATOR = preload("res://scenes/enemies/health_indicator.tscn")
 
@@ -34,7 +36,7 @@ func _ready() -> void:
 	spawn_area.append(Vector2(global_position.x+30, global_position.y+30))
 	behavior_player.play("WANDER")
 
-func _physics_process(delta):
+func _physics_process(_delta) -> void:
 	match ACTION:
 		STATE.IDLE:
 			velocity = Vector2(0, 0)
@@ -74,8 +76,8 @@ func _physics_process(delta):
 				if global_position.distance_to(player.global_position) > 120: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
-				elif $Sprite2D/EnemyHurtBox.has_overlapping_areas():
-					for area in $Sprite2D/EnemyHurtBox.get_overlapping_areas():
+				elif enemy_hurt_box.has_overlapping_areas():
+					for area in enemy_hurt_box.get_overlapping_areas():
 						if area.is_in_group("Player"):
 							behavior_player.play("ATTACK")
 				else:
@@ -114,7 +116,7 @@ func _physics_process(delta):
 		knockback_speed.x = lerp(knockback_speed.x, 0.0, 0.1)
 		knockback_speed.y = lerp(knockback_speed.y, 0.0, 0.1)
 
-func wander():
+func wander() -> void:
 	var target_x = randi_range(spawn_area[0].x, spawn_area[1].x)
 	var target_y = randi_range(spawn_area[0].y, spawn_area[1].y)
 	wander_target = Vector2(target_x, target_y)
@@ -125,15 +127,15 @@ func wander():
 	elif dir.x < 0:
 		sprite.scale.x = -1
 
-func follow():
+func follow() -> void:
 	wander_target = player.global_position
 	nav.target_position = wander_target
 
-func stagger():
+func stagger() -> void:
 	PREV_ACTION = ACTION
 	velocity = Vector2(0, 0)
 
-func take_damage(damage):
+func take_damage(damage) -> void:
 	if ACTION != STATE.DYING:
 		if health_bar == null:
 			health_bar = HEALTH_INDICATOR.instantiate()
@@ -142,7 +144,7 @@ func take_damage(damage):
 		HEALTH -= damage
 		health_bar.change_health(-damage)
 
-func is_dead():
+func is_dead() -> void:
 	if HEALTH < 1:
 		health_bar.queue_free()
 		velocity = Vector2(0, 0)

@@ -1,18 +1,19 @@
 extends Area2D
 const SPELL_EXPLOSION = preload("res://scenes/spells/spell_explosion.tscn")
 # Called when the node enters the scene tree for the first time.
-func _ready():
+
+func _ready() -> void:
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta) -> void:
 	if get_parent().velocity != Vector2(0,0):
 		if get_parent().get_real_velocity().length() < 1:
 			get_parent().queue_free()
 
 
-func _on_area_entered(area):
+func _on_area_entered(area) -> void:
 	var spell = get_parent()
 	if area.is_in_group("Enemy"):
 		var damage = Vector2()
@@ -44,7 +45,7 @@ func _on_area_entered(area):
 		else:
 			spell.queue_free()
 
-func create_explosion(area, mod, color):
+func create_explosion(area, mod, color) -> void:
 	var explosion = SPELL_EXPLOSION.instantiate()
 	explosion.global_position = area.global_position
 	explosion.mod = mod

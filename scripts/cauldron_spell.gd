@@ -24,10 +24,10 @@ func _ready() -> void:
 		mouse_default_cursor_shape = Control.CURSOR_ARROW
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
-func _get_drag_data(at_position: Vector2) -> Variant:
+func _get_drag_data(_at_position: Vector2) -> Variant:
 	if not panel_type and list_state:
 		var pt = TextureRect.new()
 		pt.texture = texture
@@ -40,10 +40,10 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	else:
 		return null
 		
-func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
+func _can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
 	return panel_type == 1 or panel_type == 2
 	
-func _drop_data(at_position: Vector2, data: Variant) -> void:
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	cauldron_ui.spell_list[data].texture = SPELL_SLOT_RECHARGE
 	cauldron_ui.spell_list[data].modulate = Color.WHITE
 	cauldron_ui.spell_list[data].list_state = false
@@ -67,7 +67,7 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 			spell_mod = data
 			slot_state = 0
 
-func reset():
+func reset() -> void:
 	if panel_type == 0:
 		texture = Global.spell_icons[spell_id]
 		modulate = Global.spell_colors[spell_id]

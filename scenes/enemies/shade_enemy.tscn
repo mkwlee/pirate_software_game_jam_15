@@ -379,6 +379,7 @@ hframes = 8
 
 [node name="EnemyHurtBox" parent="Sprite2D" instance=ExtResource("4_8hdh1")]
 position = Vector2(0, 0)
+DAMAGE = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/EnemyHurtBox"]
 position = Vector2(3, -2.5)

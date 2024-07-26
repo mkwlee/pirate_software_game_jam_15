@@ -13,6 +13,7 @@ config_version=5
 config/name="pirate_software_game_jam_15"
 run/main_scene="res://scenes/world/test_world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+run/max_fps=30
 config/icon="res://icon.svg"
 
 [autoload]
@@ -98,6 +99,7 @@ interact={
 
 [physics]
 
+common/physics_ticks_per_second=80
 common/stretch/mode="canvas_items"
 
 [rendering]

@@ -7,15 +7,15 @@ extends CharacterBody2D
 @export var MOD : Global.SPELL_TYPE
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	$AnimationPlayer.play("shoot")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta) -> void:
 	move_and_slide()
 	
-func shoot_spell():
+func shoot_spell() -> void:
 	change_parent_to_scene()
 	rotation = global_position.angle_to_point(get_global_mouse_position())
 	var direction = global_position.direction_to(get_global_mouse_position())
@@ -32,14 +32,14 @@ func shoot_spell():
 		call_deferred("set_water_mod_timer")
 
 
-func change_parent_to_scene():
+func change_parent_to_scene() -> void:
 	var current_position = global_position
 	var current_scene = get_tree().current_scene
 	get_parent().remove_child(self)
 	current_scene.add_child(self)
 	global_position = current_position
 
-func set_water_mod_timer():
+func set_water_mod_timer() -> void:
 	await get_tree().create_timer(1).timeout
 	queue_free()
 	

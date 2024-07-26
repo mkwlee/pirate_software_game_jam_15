@@ -7,5 +7,3 @@ position = Vector2(0, -4)
 collision_layer = 256
 collision_mask = 2
 script = ExtResource("1_mwj7u")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

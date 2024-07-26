@@ -1,8 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://clu72dc08mw27"]
+[gd_scene load_steps=25 format=3 uid="uid://clu72dc08mw27"]
 
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_mytuk"]
 [ext_resource type="Texture2D" uid="uid://b6k34xq5xbyxx" path="res://assets/sprites/enemies/bat_sprite.png" id="2_5fhcv"]
 [ext_resource type="PackedScene" uid="uid://be0wi76cyky1g" path="res://scenes/enemies/enemy_hit_box.tscn" id="3_nhwud"]
+[ext_resource type="PackedScene" uid="uid://d82bocfp7dmk" path="res://scenes/enemies/enemy_hurt_box.tscn" id="3_uom2p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_corjh"]
+size = Vector2(4, 11)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xc1kh"]
 radius = 1.0
@@ -97,6 +101,20 @@ tracks/1/keys = {
 "method": &"wander"
 }]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["WANDER", -1, 1.0, false],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_q8117"]
 length = 0.001
@@ -111,6 +129,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyHitBox:CAN_BE_DAMAGED")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_puwbi"]
@@ -142,6 +172,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [2]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["", -1, 1.0, false],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_y5jpe"]
 resource_name = "STAGGER"
@@ -153,11 +197,14 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
 "method": &"stagger"
+}, {
+"args": [],
+"method": &"is_dead"
 }]
 }
 tracks/1/type = "value"
@@ -172,9 +219,139 @@ tracks/1/keys = {
 "update": 1,
 "values": [4]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["STAGGER", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2vmeh"]
+resource_name = "ATTACK"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:ACTION")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["ATTACK", -1, 1.0, false],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"attack"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BehaviorPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["WANDER", -1, 1.0, false],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_qvqum"]
+resource_name = "DYING"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyHitBox:CAN_BE_DAMAGED")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:ACTION")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["DYING", -1, 1.0, false],
+"method": &"play"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3njnq"]
 _data = {
+"ATTACK": SubResource("Animation_2vmeh"),
+"DYING": SubResource("Animation_qvqum"),
 "FOLLOW": SubResource("Animation_puwbi"),
 "RESET": SubResource("Animation_q8117"),
 "STAGGER": SubResource("Animation_y5jpe"),
@@ -246,8 +423,41 @@ tracks/0/keys = {
 "values": [4, 4]
 }
 
+[sub_resource type="Animation" id="Animation_b6j0e"]
+resource_name = "ATTACK"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_cnqv2"]
+resource_name = "DYING"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [5, 6, 7]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tdcoy"]
 _data = {
+"ATTACK": SubResource("Animation_b6j0e"),
+"DYING": SubResource("Animation_cnqv2"),
 "FOLLOW": SubResource("Animation_4y38x"),
 "RESET": SubResource("Animation_6j53h"),
 "STAGGER": SubResource("Animation_4h0vp"),
@@ -258,16 +468,25 @@ _data = {
 size = Vector2(12, 11)
 
 [node name="BatEnemy" type="CharacterBody2D"]
+collision_layer = 16
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_mytuk")
 SPEED = 30
-HEALTH = 40
+HEALTH = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2)
 texture = ExtResource("2_5fhcv")
 hframes = 8
+
+[node name="EnemyHurtBox" parent="Sprite2D" instance=ExtResource("3_uom2p")]
+DAMAGE = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/EnemyHurtBox"]
+position = Vector2(7, 3.5)
+shape = SubResource("RectangleShape2D_corjh")
+debug_color = Color(0.498039, 0, 0, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -304,3 +523,5 @@ collide_with_areas = true
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_6o61g")
 debug_color = Color(0, 0.63754, 0.390731, 0.42)
+
+[connection signal="area_entered" from="Sprite2D/EnemyHurtBox" to="." method="_on_enemy_hurt_box_area_entered"]

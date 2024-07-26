@@ -17,7 +17,7 @@ func _ready() -> void:
 	for i in spell_check.size():
 		if spell_check[i]:
 			var s = CAULDRON_SPELL.instantiate()
-			s.panel_type
+			s.panel_type = 0
 			s.spell_id = i
 			s.spell_mod = i
 			s.texture = Global.spell_icons[i]
@@ -32,7 +32,7 @@ func _ready() -> void:
 	#spell_b_container.texture = Global.spell_icons[GameManager.spell_b.x]
 	#spell_b_container.modulate = Global.spell_colors[GameManager.spell_b.y]
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 

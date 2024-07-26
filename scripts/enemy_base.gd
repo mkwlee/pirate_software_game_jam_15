@@ -14,7 +14,7 @@ var can_stagger = false
 var knockback_speed = Vector2(0, 0)
 var health_bar : Node2D = null
 
-func _physics_process(delta):
+func _physics_process(_delta) -> void:
 
 	velocity = knockback_speed
 	move_and_slide()
@@ -22,7 +22,7 @@ func _physics_process(delta):
 		knockback_speed.x = lerp(knockback_speed.x, 0.0, 0.1)
 		knockback_speed.y = lerp(knockback_speed.y, 0.0, 0.1)
 
-func take_damage(damage):
+func take_damage(_damage) -> void:
 	if health_bar == null:
 		health_bar = HEALTH_INDICATOR.instantiate()
 		health_bar.position = Vector2(0, -(get_child(0).texture.get_size().y))
