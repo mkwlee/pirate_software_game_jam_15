@@ -40,38 +40,62 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="SpellListContainer" type="HFlowContainer" parent="TextureRect/MarginContainer"]
+[node name="SpellListContainer" type="HFlowContainer" parent="TextureRect"]
 layout_mode = 2
+offset_left = 5.0
+offset_top = 39.0
+offset_right = 157.0
+offset_bottom = 39.0
 size_flags_vertical = 4
 alignment = 1
 
-[node name="SpellContainer" type="HFlowContainer" parent="TextureRect/MarginContainer"]
-layout_mode = 2
+[node name="SpellContainer" type="HFlowContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
+offset_top = 5.0
+offset_right = 12.0
+offset_bottom = 15.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(12, 0)
 size_flags_vertical = 0
-alignment = 1
 
-[node name="SpellAContainer" parent="TextureRect/MarginContainer/SpellContainer" instance=ExtResource("3_0a1ns")]
+[node name="SpellAContainer" parent="TextureRect/SpellContainer" instance=ExtResource("3_0a1ns")]
 layout_mode = 2
 texture = ExtResource("4_fec16")
 panel_type = 1
 
-[node name="SpellBContainer" parent="TextureRect/MarginContainer/SpellContainer" instance=ExtResource("3_0a1ns")]
+[node name="SpellBContainer" parent="TextureRect/SpellContainer" instance=ExtResource("3_0a1ns")]
 layout_mode = 2
 texture = ExtResource("4_fec16")
 panel_type = 2
 
-[node name="ButtonContainer" type="HBoxContainer" parent="TextureRect/MarginContainer"]
-layout_mode = 2
+[node name="ButtonContainer" type="HBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -17.0
+offset_right = 76.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
 size_flags_vertical = 8
 alignment = 1
 
-[node name="ResetButton" type="Button" parent="TextureRect/MarginContainer/ButtonContainer"]
+[node name="ResetButton" type="Button" parent="TextureRect/ButtonContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_po70m")
 theme_override_font_sizes/font_size = 4
 text = "RESET"
 
-[node name="ExitButton" type="Button" parent="TextureRect/MarginContainer/ButtonContainer"]
+[node name="ExitButton" type="Button" parent="TextureRect/ButtonContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -79,5 +103,5 @@ theme_override_fonts/font = ExtResource("5_po70m")
 theme_override_font_sizes/font_size = 4
 text = "Exit"
 
-[connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="TextureRect/MarginContainer/ButtonContainer/ExitButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="TextureRect/ButtonContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="TextureRect/ButtonContainer/ExitButton" to="." method="_on_button_pressed"]

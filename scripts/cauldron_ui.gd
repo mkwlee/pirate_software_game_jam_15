@@ -1,10 +1,10 @@
 extends CanvasLayer
 
-@onready var spell_list_container: HFlowContainer = $TextureRect/MarginContainer/SpellListContainer
-@onready var spell_container: HFlowContainer = $TextureRect/MarginContainer/SpellContainer
+@onready var spell_list_container: HFlowContainer = $TextureRect/SpellListContainer
+@onready var spell_container: HFlowContainer = $TextureRect/SpellContainer
 
-@onready var spell_a_container: TextureRect = $TextureRect/MarginContainer/SpellContainer/SpellAContainer
-@onready var spell_b_container: TextureRect = $TextureRect/MarginContainer/SpellContainer/SpellBContainer
+@onready var spell_a_container: TextureRect = $TextureRect/SpellContainer/SpellAContainer
+@onready var spell_b_container: TextureRect = $TextureRect/SpellContainer/SpellBContainer
 
 
 const CAULDRON_SPELL = preload("res://scenes/interfaces/cauldron/cauldron_spell.tscn")
@@ -37,11 +37,17 @@ func _process(_delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	if spell_a_container.spell_id > -1 and spell_a_container.spell_mod > -1 and spell_b_container.spell_id > -1 and spell_b_container.spell_mod > -1:
+	if spell_a_container.spell_id > -1 and spell_b_container.spell_id > -1:
 		GameManager.spell_a.x = spell_a_container.spell_id
-		GameManager.spell_a.y = spell_a_container.spell_mod
+		if spell_a_container.spell_mod == -1:
+			GameManager.spell_a.y = spell_a_container.spell_id
+		else:
+			GameManager.spell_a.y = spell_a_container.spell_mod
 		GameManager.spell_b.x = spell_b_container.spell_id
-		GameManager.spell_b.y = spell_b_container.spell_mod
+		if spell_b_container.spell_mod == -1:
+			GameManager.spell_b.y = spell_b_container.spell_id
+		else:
+			GameManager.spell_b.y = spell_b_container.spell_mod
 		get_tree().paused = false
 		queue_free()
 		

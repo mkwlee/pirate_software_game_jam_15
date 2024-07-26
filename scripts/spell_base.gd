@@ -14,7 +14,11 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta) -> void:
 	move_and_slide()
-	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider().name == "TileMap":
+			queue_free()
+			
 func shoot_spell() -> void:
 	change_parent_to_scene()
 	rotation = global_position.angle_to_point(get_global_mouse_position())
@@ -27,9 +31,9 @@ func shoot_spell() -> void:
 		velocity = direction*SPEED
 		
 	if SHAPE == Global.SPELL_TYPE.WATER_SPELL:
-		pass
+		call_deferred("set_water_mod_timer", 2)
 	elif MOD == Global.SPELL_TYPE.WATER_SPELL:
-		call_deferred("set_water_mod_timer")
+		call_deferred("set_water_mod_timer", 1)
 
 
 func change_parent_to_scene() -> void:
@@ -39,7 +43,7 @@ func change_parent_to_scene() -> void:
 	current_scene.add_child(self)
 	global_position = current_position
 
-func set_water_mod_timer() -> void:
-	await get_tree().create_timer(1).timeout
+func set_water_mod_timer(time) -> void:
+	await get_tree().create_timer(time).timeout
 	queue_free()
 	

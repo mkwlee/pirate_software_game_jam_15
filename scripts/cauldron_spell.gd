@@ -2,7 +2,7 @@ extends TextureRect
 
 
 const SPELL_SLOT_RECHARGE = preload("res://assets/sprites/UI/spells/spell_slot_recharge.png")
-@onready var cauldron_ui: CanvasLayer = $"../../../.."
+@onready var cauldron_ui = $"../../.."
 
 # 0 = Spell list
 # 1 = Spell A
@@ -61,6 +61,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 				cauldron_ui.spell_list[spell_mod].modulate = Global.spell_colors[spell_mod]
 				cauldron_ui.spell_list[spell_mod].list_state = true
 			spell_id = data
+			spell_mod = data
 			slot_state = 1
 		1:
 			modulate = Global.spell_colors[data]

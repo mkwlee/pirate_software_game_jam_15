@@ -64,4 +64,4 @@ func _on_body_entered(body: Node2D) -> void:
 		elif spell.MOD == Global.SPELL_TYPE.FIRE_SPELL:
 			create_explosion(spell, true, spell.modulate)
 		
-		get_parent().queue_free()
+		#get_parent().queue_free()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlc4snafeotnk"]
+[gd_scene load_steps=6 format=3 uid="uid://dlc4snafeotnk"]
 
 [ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="1_6ndwv"]
+[ext_resource type="Script" path="res://scripts/damage_indicator.gd" id="1_r7q01"]
 
 [sub_resource type="Animation" id="Animation_w621v"]
 length = 0.001
@@ -51,6 +52,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [2]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_n8tvg"]
@@ -103,6 +116,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [2, 0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b27yx"]
 _data = {
@@ -111,7 +136,9 @@ _data = {
 }
 
 [node name="DamageIndicator" type="Node2D"]
+visible = false
 z_index = 4
+script = ExtResource("1_r7q01")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 2
@@ -130,4 +157,3 @@ vertical_alignment = 2
 libraries = {
 "": SubResource("AnimationLibrary_b27yx")
 }
-autoplay = "display_damage"

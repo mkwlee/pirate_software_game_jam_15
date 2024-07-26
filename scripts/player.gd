@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var hand_marker = $PlayerSprite/HandMarker
 @onready var player_movement_animations = $PlayerMovementAnimations
 @onready var player_spell_animations = $PlayerSpellAnimations
+@onready var dash_cooldown = $DashCooldown
 
 @export var HEALTH : int = 100
 @export var SPEED : int = 50
@@ -30,7 +31,8 @@ func _physics_process(_delta) -> void:
 	
 	# Movement
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	if Input.is_action_just_pressed("dash") and $DashCooldown.is_stopped():
+		
+	if Input.is_action_just_pressed("dash") and dash_cooldown.is_stopped():
 		player_spell_animations.stop()
 		player_movement_animations.play("player_dash")
 	velocity = direction*SPEED
@@ -79,3 +81,7 @@ func cast_spell(spell_spawn : Vector2) -> void:
 func change_health(amount) -> void:
 	HEALTH += amount
 	health_change_signal.emit(HEALTH)
+
+
+func _on_dash_cooldown_timeout():
+	$PlayerSprite/GPUParticles2D.emitting = false

@@ -4,6 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://rtj1ibv05cdf" path="res://assets/sprites/player/player_sprite_test.png" id="2_wo0oc"]
 [ext_resource type="PackedScene" uid="uid://bd2q7v0rrkdor" path="res://scenes/player/player_hit_box.tscn" id="3_wmy7a"]
 
+[sub_resource type="Curve" id="Curve_e8fbc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_604p7"]
+curve = SubResource("Curve_e8fbc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v35jt"]
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_604p7")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_u21qi"]
 radius = 1.0
 
@@ -36,7 +49,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../GPUParticles2D:emitting")
+tracks/2/path = NodePath("GPUParticles2D:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -74,31 +87,31 @@ tracks/1/keys = {
 "update": 1,
 "values": [200, 200, 100, 50]
 }
-tracks/2/type = "value"
+tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../GPUParticles2D:emitting")
+tracks/2/path = NodePath("../DashCooldown")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../DashCooldown")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [-1],
 "method": &"start"
 }]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_77qii"]
@@ -212,19 +225,6 @@ _data = {
 "cast_water_spell": SubResource("Animation_ypxbm")
 }
 
-[sub_resource type="Curve" id="Curve_lb3uk"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.748619, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_udsml"]
-curve = SubResource("Curve_lb3uk")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_36wph"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
-scale_max = 5.0
-scale_curve = SubResource("CurveTexture_udsml")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7axn"]
 size = Vector2(4, 7)
 
@@ -245,6 +245,12 @@ frame = 1
 [node name="HandMarker" type="Marker2D" parent="PlayerSprite"]
 position = Vector2(5, -1)
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PlayerSprite"]
+show_behind_parent = true
+emitting = false
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_v35jt")
+
 [node name="MovementCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_u21qi")
 
@@ -259,13 +265,6 @@ libraries = {
 "": SubResource("AnimationLibrary_svi16")
 }
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-show_behind_parent = true
-position = Vector2(0, -4)
-emitting = false
-amount = 128
-process_material = SubResource("ParticleProcessMaterial_36wph")
-
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -277,3 +276,5 @@ position = Vector2(0, -4)
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_p7axn")
 debug_color = Color(0, 0.63754, 0.390731, 0.42)
+
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

@@ -2,6 +2,9 @@ extends Area2D
 
 const DAMAGE_INDICATOR = preload("res://scenes/enemies/damage_indicator.tscn")
 
+@onready var DAMAGE_INDICATORS : Array = [$DamageIndicator, $DamageIndicator2, $DamageIndicator3, $DamageIndicator4, $DamageIndicator5, $DamageIndicator6]
+var curr_indicator : int = 0
+
 @export var CAN_BE_DAMAGED : bool = true
 
 var enemy
@@ -14,10 +17,9 @@ func _ready() -> void:
 
 func take_damage(damage : int) -> void:
 	if CAN_BE_DAMAGED:
-		var dmg = DAMAGE_INDICATOR.instantiate()
-		dmg.position = Vector2(randi_range(-8, 8), randi_range(-8, 8))
-		dmg.get_child(0).text = str(damage)
-		add_child(dmg)
+		#call_deferred("create_damage_indicator", damage)
+		if GameManager.display_damage:
+			create_damage_indicator(damage)
 		
 		enemy.take_damage(damage)
 		
@@ -31,3 +33,11 @@ func take_damage(damage : int) -> void:
 func push_position(direction, speed) -> void:
 	if CAN_BE_DAMAGED:
 		enemy.knockback_speed = direction*speed
+		
+func create_damage_indicator(damage : int) -> void:
+	DAMAGE_INDICATORS[curr_indicator].run_indicator(damage)
+	curr_indicator = (curr_indicator+1) % 6
+	#var dmg = DAMAGE_INDICATOR.instantiate()
+	#dmg.position = Vector2(randi_range(-8, 8), randi_range(-8, 8))
+	#dmg.get_child(0).text = str(damage)
+	#add_child(dmg)

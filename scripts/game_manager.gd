@@ -5,6 +5,8 @@ extends Node
 var spell_a : Vector2i = Vector2i(Global.SPELL_TYPE.EARTH_SPELL, Global.SPELL_TYPE.EARTH_SPELL)
 var spell_b : Vector2i = Vector2i(Global.SPELL_TYPE.FIRE_SPELL, Global.SPELL_TYPE.FIRE_SPELL)
 
+
+var display_damage = true
 var unlocked_spells = [1, 1, 1, 1]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
