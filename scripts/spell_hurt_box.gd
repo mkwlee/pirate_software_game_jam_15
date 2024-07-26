@@ -24,10 +24,10 @@ func _on_area_entered(area):
 		#EARTH_SPELL knockback
 		if spell.SHAPE == Global.SPELL_TYPE.EARTH_SPELL:
 			area.push_position(global_position.direction_to(area.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
-			300)
+			150)
 		elif spell.MOD == Global.SPELL_TYPE.EARTH_SPELL:
 			area.push_position(global_position.direction_to(area.global_position).lerp(spell.velocity.normalized(), 0.5).normalized(), 
-			150)
+			100)
 			
 		
 		#FIRE_SPELL explosion
