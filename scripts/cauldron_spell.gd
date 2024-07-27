@@ -67,6 +67,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 			modulate = Global.spell_colors[data]
 			spell_mod = data
 			slot_state = 0
+	set_tooltip()
 
 func reset() -> void:
 	if panel_type == 0:
@@ -80,3 +81,6 @@ func reset() -> void:
 		spell_mod = -1
 		slot_state = 0
 		
+
+func set_tooltip():
+	tooltip_text = Global.spell_descriptions[spell_id]

@@ -10,35 +10,35 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_2edl8"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_poxvg"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_drgf0"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_avqqy"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_504xp"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_23qg1"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_pqv51"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_n6b4w"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_2kihr"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_o7oqk"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)])
@@ -59,19 +59,19 @@ texture_region_size = Vector2i(10, 10)
 1:0/0 = 0
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
-1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2edl8")
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_poxvg")
 1:1/0 = 0
 1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:1/0/physics_layer_0/angular_velocity = 0.0
-1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_drgf0")
+1:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_avqqy")
 2:1/0 = 0
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
-2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_pqv51")
+2:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_n6b4w")
 2:0/0 = 0
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
-2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_504xp")
+2:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_23qg1")
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
@@ -123,7 +123,7 @@ texture_region_size = Vector2i(10, 10)
 3:1/0 = 0
 3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:1/0/physics_layer_0/angular_velocity = 0.0
-3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2kihr")
+3:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_o7oqk")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mnc84"]
 resource_name = "Scenes"
@@ -141,6 +141,6 @@ z_index = -1
 tile_set = SubResource("TileSet_nxfy2")
 rendering_quadrant_size = 10
 format = 2
-layer_0/name = "Walls"
-layer_1/name = "Ground"
+layer_0/name = "Ground"
+layer_1/name = "Walls"
 layer_1/tile_data = PackedInt32Array()

@@ -24,3 +24,11 @@ const spell_icons = [
 	preload("res://assets/sprites/UI/spells/water_spell_slot.png"),
 	preload("res://assets/sprites/UI/spells/fire_spell_slot.png")
 ]
+
+
+const spell_descriptions = [
+	"Earth Spell. Charge and launch a boulder of the earth, dealing damage to the target and knocking them back.",
+	"Air Spell. Summon three slices of air that burst with speed, dealing x-y damage to the target.",
+	"Water Spell. Create a wave of water that crashes forward, dealing x-y damage to any target in its path.",
+	"Fire Spell. Cast a bolt of fire, dealing x-y damage and exploding with an additional x-y damage to any target it hits."
+]

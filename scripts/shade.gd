@@ -60,7 +60,8 @@ func _physics_process(_delta) -> void:
 			else:
 				enemy_detection_ray.enabled = false
 				enemy_detection_ray.target_position = Vector2(0, 0)
-			if nav.distance_to_target() < 5:
+			
+			if nav.distance_to_target() < 5 or is_on_wall_only():
 				behavior_player.play("WANDER")
 			pass
 			
