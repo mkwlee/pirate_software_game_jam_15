@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2wyn0v2jpxa7"]
+
+[ext_resource type="Script" path="res://scripts/respawn_point.gd" id="1_hc1y7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyl0r"]
+size = Vector2(10, 10)
+
+[node name="RespawnPoint" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_hc1y7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_iyl0r")
+debug_color = Color(0.735003, 0.470018, 0, 0.42)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

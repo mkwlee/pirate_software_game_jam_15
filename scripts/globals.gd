@@ -32,3 +32,10 @@ const spell_descriptions = [
 	"Water Spell. Create a wave of water that crashes forward, dealing x-y damage to any target in its path.",
 	"Fire Spell. Cast a bolt of fire, dealing x-y damage and exploding with an additional x-y damage to any target it hits."
 ]
+
+const mod_descriptions = [
+	"Earth Mod. Spell deals knockback on target hit.",
+	"Air Mod. Spell travel speed is increased.",
+	"Water Mod. Spell persists through target.",
+	"Fire Mod. Spell creates an explosion on target hit."
+]

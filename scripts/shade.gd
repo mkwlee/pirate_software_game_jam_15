@@ -97,6 +97,12 @@ func _physics_process(_delta) -> void:
 			pass
 		STATE.ATTACK:
 			velocity = Vector2(0, 0)
+			if enemy_hurt_box.has_overlapping_areas():
+				for area in enemy_hurt_box.get_overlapping_areas():
+						if area.is_in_group("Player"):
+							behavior_player.play("ATTACK")
+			else:
+				behavior_player.play("FOLLOW")
 			pass
 		STATE.STAGGER:
 			velocity = Vector2(0, 0)

@@ -6,19 +6,23 @@ extends CharacterBody2D
 @onready var player_movement_animations = $PlayerMovementAnimations
 @onready var player_spell_animations = $PlayerSpellAnimations
 @onready var dash_cooldown = $DashCooldown
+@onready var player_damage_animations: AnimationPlayer = $PlayerDamageAnimations
 
 @export var HEALTH : int = 100
 @export var SPEED : int = 50
 
 signal health_change_signal(new_health)
+signal player_death_signal(respawn)
 
 var current_spell
 var new_color : Color = Color.WHITE
 var color_change_str = 0.1
 
+@export var is_dead : bool = false
+var spawn_location : Vector2
+
 func _ready():
-	#player_sprite.self_modulate = Color("#80461B")
-	pass
+	spawn_location = global_position
 
 func _process(delta: float) -> void:
 	if player_sprite.self_modulate != new_color:
@@ -29,40 +33,43 @@ func _process(delta: float) -> void:
 		
 func _physics_process(_delta) -> void:
 	
-	# Movement
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if not is_dead:
+		# Movement
+		var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			
+		if Input.is_action_just_pressed("dash") and dash_cooldown.is_stopped():
+			player_spell_animations.stop()
+			player_movement_animations.play("player_dash")
+		velocity = direction*SPEED
+		move_and_slide()
 		
-	if Input.is_action_just_pressed("dash") and dash_cooldown.is_stopped():
-		player_spell_animations.stop()
-		player_movement_animations.play("player_dash")
-	velocity = direction*SPEED
-	move_and_slide()
-	
-	#Animation WALK or IDLE
-	if velocity.x or velocity.y:
-		if not player_movement_animations.is_playing():
-			player_movement_animations.play("player_walk")
-	else:
-		player_movement_animations.play("RESET")
-	
-	#Look LEFT or RIGHT at MOUSE
-	var mouse_direction = global_position.direction_to(get_global_mouse_position())
-	if mouse_direction.x > 0:
-		player_sprite.scale.x = 1
-	elif mouse_direction.x < 0:
-		player_sprite.scale.x = -1
-	
-	# Cast SPELL A
-	if Input.is_action_pressed("cast_spell_a") and not player_spell_animations.is_playing():
-		current_spell = GameManager.spell_a
-		player_spell_animations.play(Global.spells[GameManager.spell_a.x][1])
-		new_color = Global.spell_colors[GameManager.spell_a.y]
+		#Animation WALK or IDLE
+		if velocity.x or velocity.y:
+			if not player_movement_animations.is_playing():
+				player_movement_animations.play("player_walk")
+		else:
+			player_movement_animations.play("RESET")
 		
-	# Cast SPELL B
-	if Input.is_action_pressed("cast_spell_b") and not player_spell_animations.is_playing():
-		current_spell = GameManager.spell_b
-		player_spell_animations.play(Global.spells[GameManager.spell_b.x][1])
-		new_color = Global.spell_colors[GameManager.spell_b.y]
+		#Look LEFT or RIGHT at MOUSE
+		var mouse_direction = global_position.direction_to(get_global_mouse_position())
+		if mouse_direction.x > 0:
+			player_sprite.scale.x = 1
+		elif mouse_direction.x < 0:
+			player_sprite.scale.x = -1
+		
+		# Cast SPELL A
+		if Input.is_action_pressed("cast_spell_a") and not player_spell_animations.is_playing():
+			if GameManager.spell_a.x != -1:
+				current_spell = GameManager.spell_a
+				player_spell_animations.play(Global.spells[GameManager.spell_a.x][1])
+				new_color = Global.spell_colors[GameManager.spell_a.y]
+			
+		# Cast SPELL B
+		if Input.is_action_pressed("cast_spell_b") and not player_spell_animations.is_playing():
+			if GameManager.spell_b.x != -1:
+				current_spell = GameManager.spell_b
+				player_spell_animations.play(Global.spells[GameManager.spell_b.x][1])
+				new_color = Global.spell_colors[GameManager.spell_b.y]
 		
 func cast_spell(spell_spawn : Vector2) -> void:
 	var proj = Global.spells[current_spell.x][0].instantiate()
@@ -81,7 +88,24 @@ func cast_spell(spell_spawn : Vector2) -> void:
 func change_health(amount) -> void:
 	HEALTH += amount
 	health_change_signal.emit(HEALTH)
-
+	
+	if amount < 0:
+		player_damage_animations.play("player_hurt")
 
 func _on_dash_cooldown_timeout():
 	$PlayerSprite/GPUParticles2D.emitting = false
+	
+func is_player_dead():
+	if HEALTH < 1:
+		is_dead = true
+		player_damage_animations.play("player_death")
+		player_movement_animations.stop()
+		player_spell_animations.stop()
+		get_tree().call_group("Enemy", "player_dead")
+		player_death_signal.emit(spawn_location)
+
+func respawn(reset_scene : bool):
+	if reset_scene:
+		get_tree().reload_current_scene()
+	else:
+		global_position = spawn_location

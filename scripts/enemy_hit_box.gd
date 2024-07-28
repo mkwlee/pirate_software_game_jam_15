@@ -41,3 +41,7 @@ func create_damage_indicator(damage : int) -> void:
 	#dmg.position = Vector2(randi_range(-8, 8), randi_range(-8, 8))
 	#dmg.get_child(0).text = str(damage)
 	#add_child(dmg)
+	
+func player_dead():
+	get_parent().behavior_player.stop()
+	get_parent().ACTION = get_parent().STATE.IDLE

@@ -31,11 +31,15 @@ func set_spell_cooldown(slot : int, length : float):
 	spell_slots[slot][1].value = length
 
 func set_spell_slots():
-	var spell_array = [GameManager.spell_a, GameManager.spell_b]
-	for slot in range(0, 2):
+	var spell_array : Array
+	if GameManager.spell_a.x != -1:
+		spell_array.append(GameManager.spell_a)
+	if GameManager.spell_b.x != -1:
+		spell_array.append(GameManager.spell_b)
+	
+	for slot in range(0, spell_array.size()):
 		spell_slots[slot][0].texture = Global.spell_icons[spell_array[slot].x]
 		spell_slots[slot][0].modulate = Global.spell_colors[spell_array[slot].y]
-
 
 func _on_player_health_change_signal(new_health: Variant) -> void:
 	health_bar.value = max(0, new_health)
