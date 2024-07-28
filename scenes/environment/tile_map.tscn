@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://cfbc6ltchrnt2"]
+[gd_scene load_steps=26 format=3 uid="uid://cfbc6ltchrnt2"]
 
 [ext_resource type="Texture2D" uid="uid://dt6ifj61fxey2" path="res://assets/sprites/world/tileset_test.png" id="1_8f1yx"]
 [ext_resource type="PackedScene" uid="uid://dgrutlqq5k8u2" path="res://scenes/environment/fall_area.tscn" id="2_dwvdf"]
 [ext_resource type="PackedScene" uid="uid://b2wyn0v2jpxa7" path="res://scenes/environment/respawn_point.tscn" id="3_bhnho"]
+[ext_resource type="PackedScene" uid="uid://1kisve6o6mx3" path="res://scenes/environment/spell_pickup.tscn" id="4_kvh4w"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_hqkqb"]
 vertices = PackedVector2Array(2, 2, -2, 2, -2, -2, 2, -2)
@@ -226,6 +227,7 @@ texture_region_size = Vector2i(10, 10)
 resource_name = "Scenes"
 scenes/1/scene = ExtResource("2_dwvdf")
 scenes/2/scene = ExtResource("3_bhnho")
+scenes/3/scene = ExtResource("4_kvh4w")
 
 [sub_resource type="TileSet" id="TileSet_nxfy2"]
 tile_size = Vector2i(10, 10)

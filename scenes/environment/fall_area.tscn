@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/fall_area.gd" id="1_bq04x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42to8"]
-size = Vector2(10, 10)
+size = Vector2(3, 3)
 
 [node name="FallArea" type="Area2D"]
 collision_mask = 2
@@ -11,3 +11,4 @@ script = ExtResource("1_bq04x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_42to8")
+debug_color = Color(0.983249, 0, 0.35478, 0.42)

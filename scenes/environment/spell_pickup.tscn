@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://1kisve6o6mx3"]
+
+[ext_resource type="Script" path="res://scripts/spell_pickup.gd" id="1_pj4mj"]
+[ext_resource type="Texture2D" uid="uid://btrmo64yso44w" path="res://assets/sprites/UI/spells/spell_slot_recharge.png" id="2_r15fh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jn4bq"]
+size = Vector2(10, 10)
+
+[sub_resource type="Animation" id="Animation_5gur6"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tgu0b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fmk1k"]
+_data = {
+"RESET": SubResource("Animation_tgu0b"),
+"idle": SubResource("Animation_5gur6")
+}
+
+[node name="SpellPickup" type="Area2D"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_pj4mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jn4bq")
+debug_color = Color(0.603652, 0.576723, 1, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_r15fh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fmk1k")
+}
+autoplay = "idle"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
