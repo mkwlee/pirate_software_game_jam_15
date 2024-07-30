@@ -31,7 +31,7 @@ func set_spell_cooldown(slot : int, length : float):
 	spell_slots[slot][1].value = length
 
 func set_spell_slots():
-	var spell_array : Array
+	var spell_array : Array = []
 	if GameManager.spell_a.x != -1:
 		spell_array.append(GameManager.spell_a)
 	if GameManager.spell_b.x != -1:

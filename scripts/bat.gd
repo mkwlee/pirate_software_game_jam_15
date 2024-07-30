@@ -45,7 +45,7 @@ func _physics_process(_delta) -> void:
 				sprite.scale.x = -1
 			velocity = (dir * SPEED)
 			
-			if global_position.distance_to(player.global_position) < 80:
+			if global_position.distance_to(player.global_position) < 150:
 				enemy_detection_ray.enabled = true
 				enemy_detection_ray.target_position = to_local(player.global_position)
 				if enemy_detection_ray.is_colliding():
@@ -55,7 +55,7 @@ func _physics_process(_delta) -> void:
 						behavior_player.play("FOLLOW")
 			
 			
-			if nav.distance_to_target() < 5:
+			if global_position.distance_to(wander_target) < 20:
 				behavior_player.play("WANDER")
 			pass
 		STATE.FOLLOW:
@@ -68,7 +68,7 @@ func _physics_process(_delta) -> void:
 			velocity = (dir * SPEED)
 			
 			if behavior_player.current_animation != "STAGGER":
-				if global_position.distance_to(player.global_position) > 120: 
+				if global_position.distance_to(player.global_position) > 200: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
 				elif global_position.distance_to(player.global_position) < 80: 

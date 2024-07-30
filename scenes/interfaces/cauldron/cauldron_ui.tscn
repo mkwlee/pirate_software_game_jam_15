@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8so0tlulvo3h"]
+[gd_scene load_steps=8 format=3 uid="uid://b8so0tlulvo3h"]
 
 [ext_resource type="Texture2D" uid="uid://d0bjdhrqo0knt" path="res://assets/sprites/UI/cauldron/cauldron_ui_back.png" id="1_jwdti"]
 [ext_resource type="Script" path="res://scripts/cauldron_ui.gd" id="1_rs80c"]
 [ext_resource type="PackedScene" uid="uid://dtor6cunnfdhg" path="res://scenes/interfaces/cauldron/cauldron_spell.tscn" id="3_0a1ns"]
 [ext_resource type="Texture2D" uid="uid://btrmo64yso44w" path="res://assets/sprites/UI/spells/spell_slot_recharge.png" id="4_fec16"]
 [ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="5_po70m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dtuy4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rkhxg"]
 
 [node name="CauldronUI" type="CanvasLayer"]
 process_mode = 3
@@ -93,6 +97,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_po70m")
 theme_override_font_sizes/font_size = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dtuy4")
 text = "RESET"
 
 [node name="ExitButton" type="Button" parent="TextureRect/ButtonContainer"]
@@ -101,6 +106,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("5_po70m")
 theme_override_font_sizes/font_size = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rkhxg")
 text = "Exit"
 
 [connection signal="pressed" from="TextureRect/ButtonContainer/ResetButton" to="." method="_on_reset_button_pressed"]

@@ -1,12 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtor6cunnfdhg"]
+[gd_scene load_steps=3 format=3 uid="uid://dtor6cunnfdhg"]
 
 [ext_resource type="Script" path="res://scripts/cauldron_spell.gd" id="1_1wmax"]
+[ext_resource type="Theme" uid="uid://bihl5ecnqm35r" path="res://assets/theme.tres" id="1_8ivj5"]
 
 [node name="CauldronSpellTexture" type="TextureRect"]
 offset_right = 20.0
 offset_bottom = 20.0
-tooltip_text = "Click and drag"
+tooltip_text = "Spell: None. Drag a spell onto here to set.
+Mod: None. Drag a spell onto here to set."
 mouse_default_cursor_shape = 6
+theme = ExtResource("1_8ivj5")
 script = ExtResource("1_1wmax")
 
 [node name="Panel" type="Panel" parent="."]

@@ -49,7 +49,7 @@ func _physics_process(_delta) -> void:
 				sprite.scale.x = -1
 			velocity = (dir * SPEED)
 
-			if global_position.distance_to(player.global_position) < 80:
+			if global_position.distance_to(player.global_position) < 150:
 				enemy_detection_ray.enabled = true
 				enemy_detection_ray.target_position = to_local(player.global_position)
 				if enemy_detection_ray.is_colliding():
@@ -61,7 +61,7 @@ func _physics_process(_delta) -> void:
 				enemy_detection_ray.enabled = false
 				enemy_detection_ray.target_position = Vector2(0, 0)
 			
-			if nav.distance_to_target() < 5 or is_on_wall_only():
+			if global_position.distance_to(wander_target) < 20 or is_on_wall_only():
 				behavior_player.play("WANDER")
 			pass
 			
@@ -74,7 +74,7 @@ func _physics_process(_delta) -> void:
 			velocity = (dir * SPEED)
 			
 			if behavior_player.current_animation != "STAGGER":
-				if global_position.distance_to(player.global_position) > 120: 
+				if global_position.distance_to(player.global_position) > 200: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
 				elif enemy_hurt_box.has_overlapping_areas():
@@ -83,17 +83,6 @@ func _physics_process(_delta) -> void:
 							behavior_player.play("ATTACK")
 				else:
 					behavior_player.play("FOLLOW")
-			
-			#enemy_detection_ray.target_position = to_local(player.global_position)
-			#if enemy_detection_ray.is_colliding():
-				#if enemy_detection_ray.get_collider().is_in_group("Player"):
-					#behavior_player.play("FOLLOW")
-				#else:
-					#enemy_detection_ray.enabled = false
-					#behavior_player.play("WANDER")
-			#else:
-				#enemy_detection_ray.enabled = false
-				#behavior_player.play("WANDER")
 			pass
 		STATE.ATTACK:
 			velocity = Vector2(0, 0)
@@ -127,6 +116,8 @@ func wander() -> void:
 	var target_x = randi_range(spawn_area[0].x, spawn_area[1].x)
 	var target_y = randi_range(spawn_area[0].y, spawn_area[1].y)
 	wander_target = Vector2(target_x, target_y)
+	
+	
 	nav.target_position = wander_target
 	var dir = to_local(nav.get_next_path_position()).normalized()
 	if dir.x > 0:
@@ -156,4 +147,5 @@ func is_dead() -> void:
 		health_bar.queue_free()
 		velocity = Vector2(0, 0)
 		knockback_speed = Vector2(0, 0)
+		behavior_player.stop()
 		behavior_player.play("DYING")

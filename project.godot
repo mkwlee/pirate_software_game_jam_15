@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="pirate_software_game_jam_15"
-run/main_scene="res://scenes/world/test_world.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=30
 config/icon="res://icon.svg"
@@ -40,6 +40,10 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Asset_Drawer/plugin.cfg")
+
+[gui]
+
+timers/tooltip_delay_sec=0.05
 
 [input]
 

@@ -22,6 +22,7 @@ func _ready() -> void:
 			s.spell_mod = i
 			s.texture = Global.spell_icons[i]
 			s.modulate = Global.spell_colors[i]
+			s.set_tooltip()
 			spell_list.append(s)
 			spell_list_container.add_child(s)
 		else:
@@ -31,6 +32,7 @@ func _ready() -> void:
 	#spell_a_container.modulate = Global.spell_colors[GameManager.spell_a.y]
 	#spell_b_container.texture = Global.spell_icons[GameManager.spell_b.x]
 	#spell_b_container.modulate = Global.spell_colors[GameManager.spell_b.y]
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
@@ -43,6 +45,7 @@ func _on_button_pressed() -> void:
 			GameManager.spell_a.y = spell_a_container.spell_id
 		else:
 			GameManager.spell_a.y = spell_a_container.spell_mod
+			
 		GameManager.spell_b.x = spell_b_container.spell_id
 		if spell_b_container.spell_mod == -1:
 			GameManager.spell_b.y = spell_b_container.spell_id

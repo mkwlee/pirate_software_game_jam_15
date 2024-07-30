@@ -51,7 +51,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	match slot_state:
 		0:
 			texture = Global.spell_icons[data]
-			modulate = Color.WHITE
+			modulate = Global.spell_colors[data]
 			if spell_id != -1:
 				cauldron_ui.spell_list[spell_id].texture = Global.spell_icons[spell_id]
 				cauldron_ui.spell_list[spell_id].modulate = Global.spell_colors[spell_id]
@@ -61,7 +61,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 				cauldron_ui.spell_list[spell_mod].modulate = Global.spell_colors[spell_mod]
 				cauldron_ui.spell_list[spell_mod].list_state = true
 			spell_id = data
-			spell_mod = data
+			spell_mod = -1
 			slot_state = 1
 		1:
 			modulate = Global.spell_colors[data]
@@ -83,4 +83,19 @@ func reset() -> void:
 		
 
 func set_tooltip():
-	tooltip_text = Global.spell_descriptions[spell_id]
+	var tip : String = ""
+	if panel_type == 0:
+		tip += 'Click and drag spells to use'
+	else:
+		tip += 'Drag a spell here to use or to use as a modifier'
+		
+	if spell_id != -1:
+		tip += "\nSpell: "+Global.spell_descriptions[spell_id]
+	else:
+		tip += "\nSpell: None. Drag a spell onto here to set."
+	
+	if spell_mod != -1:
+		tip += "\nMod: "+Global.mod_descriptions[spell_mod]
+	else:
+		tip += "\nMod: None. Drag a spell onto here to set."
+	tooltip_text = tip

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bihl5ecnqm35r"]
+
+[ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="1_08tyf"]
+
+[resource]
+default_font = ExtResource("1_08tyf")

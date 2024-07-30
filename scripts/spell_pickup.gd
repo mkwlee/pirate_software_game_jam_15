@@ -22,3 +22,10 @@ func _on_area_entered(area: Area2D) -> void:
 			GameManager.spell_a.y = SPELL
 			get_tree().current_scene.find_child("GUI").set_spell_slots()
 			queue_free()
+		elif GameManager.spell_b.x == -1:
+			GameManager.spell_b.x = SPELL
+			GameManager.spell_b.y = SPELL
+			get_tree().current_scene.find_child("GUI").set_spell_slots()
+		queue_free()
+			
+			

@@ -1,0 +1,162 @@
+[gd_scene load_steps=11 format=3 uid="uid://bxggr5gll7jji"]
+
+[ext_resource type="Shader" path="res://assets/sprites/environment/tutorial_level.gdshader" id="1_2xiwp"]
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_gaslq"]
+[ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="2_ssnxx"]
+[ext_resource type="Theme" uid="uid://bihl5ecnqm35r" path="res://assets/theme.tres" id="3_y151d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ofn5"]
+shader = ExtResource("1_2xiwp")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/OCTAVES = 4
+shader_parameter/enable_pixelation = true
+shader_parameter/pixelation_amount = 75
+shader_parameter/fog_direction = Vector2(1, 1)
+shader_parameter/scroll_noise_tex = false
+shader_parameter/noise_scroll_direction = Vector2(1, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_obg07"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ww8po"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3w2ro"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wtv2x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e8r2q"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gaslq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.12549, 0.203922, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_8ofn5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -195.0
+offset_top = -595.0
+offset_right = 1105.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Main" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Main"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -604.5
+offset_top = 92.0
+offset_right = 604.5
+offset_bottom = 398.0
+grow_horizontal = 2
+theme_override_constants/line_spacing = 24
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 98
+text = "Alchemy in the Darklands"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="GameModes" type="VBoxContainer" parent="Main"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -19.0
+offset_right = 260.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="TutorialButton" type="Button" parent="Main/GameModes"]
+layout_mode = 2
+tooltip_text = "The first level and introduction to the story."
+theme = ExtResource("3_y151d")
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_obg07")
+action_mode = 0
+text = "Tutorial"
+
+[node name="ArenaButton" type="Button" parent="Main/GameModes"]
+layout_mode = 2
+tooltip_text = "An endless wave-based battle to test your alchemical configurations."
+theme = ExtResource("3_y151d")
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ww8po")
+action_mode = 0
+text = "Arena"
+
+[node name="TrainingButton" type="Button" parent="Main/GameModes"]
+layout_mode = 2
+tooltip_text = "Test out different alchemical spell combinations."
+theme = ExtResource("3_y151d")
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3w2ro")
+action_mode = 0
+text = "Training"
+
+[node name="Configurations" type="HBoxContainer" parent="Main"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -255.5
+offset_top = -155.0
+offset_right = 255.5
+offset_bottom = -119.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="TutorialButton2" type="Button" parent="Main/Configurations"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wtv2x")
+action_mode = 0
+text = "Options"
+
+[node name="TutorialButton3" type="Button" parent="Main/Configurations"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ssnxx")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e8r2q")
+action_mode = 0
+text = "Controls"
+
+[connection signal="pressed" from="Main/GameModes/TutorialButton" to="." method="_on_tutorial_button_pressed"]
