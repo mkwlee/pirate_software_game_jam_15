@@ -41,6 +41,7 @@ func _ready() -> void:
 			enemy_hit_box.position = Vector2(0, -4)
 			collision_shape.position = Vector2(0, -3)
 			SPEED *= 2
+			HEALTH /= 2
 			enemy_hurt_box.DAMAGE *= 0.5
 		1:
 			pass
@@ -50,6 +51,7 @@ func _ready() -> void:
 			enemy_hit_box.position = Vector2(0, -1)
 			collision_shape.position = Vector2(0, 4)
 			SPEED /= 2
+			HEALTH *= 2
 			enemy_hurt_box.DAMAGE *= 2
 			
 	spawn_area.append(Vector2(global_position.x-30, global_position.y-30))

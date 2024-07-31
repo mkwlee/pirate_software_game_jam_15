@@ -34,8 +34,12 @@ func set_spell_slots():
 	var spell_array : Array = []
 	if GameManager.spell_a.x != -1:
 		spell_array.append(GameManager.spell_a)
+	else:
+		spell_slots[0][0].texture = null
 	if GameManager.spell_b.x != -1:
 		spell_array.append(GameManager.spell_b)
+	else:
+		spell_slots[1][0].texture = null
 	
 	for slot in range(0, spell_array.size()):
 		spell_slots[slot][0].texture = Global.spell_icons[spell_array[slot].x]

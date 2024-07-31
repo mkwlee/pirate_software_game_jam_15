@@ -7,6 +7,8 @@ var health_change_delay
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	health_bar.max_value = get_parent().HEALTH
+	health_change_bar.max_value = get_parent().HEALTH
 	health_bar.value = get_parent().HEALTH
 	health_change_bar.value = get_parent().HEALTH
 

@@ -39,20 +39,19 @@ func _process(_delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	if spell_a_container.spell_id > -1 and spell_b_container.spell_id > -1:
-		GameManager.spell_a.x = spell_a_container.spell_id
-		if spell_a_container.spell_mod == -1:
-			GameManager.spell_a.y = spell_a_container.spell_id
-		else:
-			GameManager.spell_a.y = spell_a_container.spell_mod
-			
-		GameManager.spell_b.x = spell_b_container.spell_id
-		if spell_b_container.spell_mod == -1:
-			GameManager.spell_b.y = spell_b_container.spell_id
-		else:
-			GameManager.spell_b.y = spell_b_container.spell_mod
-		get_tree().paused = false
-		queue_free()
+	GameManager.spell_a.x = spell_a_container.spell_id
+	if spell_a_container.spell_mod == -1:
+		GameManager.spell_a.y = spell_a_container.spell_id
+	else:
+		GameManager.spell_a.y = spell_a_container.spell_mod
+		
+	GameManager.spell_b.x = spell_b_container.spell_id
+	if spell_b_container.spell_mod == -1:
+		GameManager.spell_b.y = spell_b_container.spell_id
+	else:
+		GameManager.spell_b.y = spell_b_container.spell_mod
+	get_tree().paused = false
+	queue_free()
 		
 
 func _on_reset_button_pressed() -> void:

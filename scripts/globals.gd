@@ -13,7 +13,7 @@ const spells = [
 
 const spell_colors = [
 	Color("#80461b"), 
-	Color("#848884"),
+	Color("#8A9A5B"),
 	Color("#6082b6"),
 	Color("#de3163")
 ]
@@ -30,12 +30,12 @@ const spell_descriptions = [
 	"Earth Spell. Charge and launch a boulder of the earth, dealing damage to the target and knocking them back.",
 	"Air Spell. Summon three slices of air that burst with speed, dealing damage to the target.",
 	"Water Spell. Create a wave of water that crashes forward, dealing damage to any target in its path.",
-	"Fire Spell. Cast a bolt of fire, dealing damage and exploding with damage to any toher targets it hits."
+	"Fire Spell. Cast a bolt of fire, dealing damage and exploding with damage to any other targets it hits."
 ]
 
 const mod_descriptions = [
 	"Earth Mod. Spell deals knockback on target hit.",
 	"Air Mod. Spell travel speed is increased.",
-	"Water Mod. Spell persists through target.",
+	"Water Mod. Spell persists through the target.",
 	"Fire Mod. Spell creates an explosion on target hit."
 ]

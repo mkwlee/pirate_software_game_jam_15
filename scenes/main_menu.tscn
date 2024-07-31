@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxggr5gll7jji"]
+[gd_scene load_steps=10 format=3 uid="uid://bxggr5gll7jji"]
 
 [ext_resource type="Shader" path="res://assets/sprites/environment/tutorial_level.gdshader" id="1_2xiwp"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_gaslq"]
-[ext_resource type="FontFile" uid="uid://gop0er8gjkq4" path="res://assets/fonts/dogica.ttf" id="2_ssnxx"]
 [ext_resource type="Theme" uid="uid://bihl5ecnqm35r" path="res://assets/theme.tres" id="3_y151d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ofn5"]
@@ -26,6 +25,7 @@ shader_parameter/noise_scroll_direction = Vector2(1, 0)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e8r2q"]
 
 [node name="MainMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +44,6 @@ grow_vertical = 2
 color = Color(0.133333, 0.12549, 0.203922, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_8ofn5")
 layout_mode = 1
 anchors_preset = 15
@@ -76,7 +75,6 @@ offset_right = 604.5
 offset_bottom = 398.0
 grow_horizontal = 2
 theme_override_constants/line_spacing = 24
-theme_override_fonts/font = ExtResource("2_ssnxx")
 theme_override_font_sizes/font_size = 98
 text = "Alchemy in the Darklands"
 horizontal_alignment = 1
@@ -102,7 +100,6 @@ theme_override_constants/separation = 15
 layout_mode = 2
 tooltip_text = "The first level and introduction to the story."
 theme = ExtResource("3_y151d")
-theme_override_fonts/font = ExtResource("2_ssnxx")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_obg07")
 action_mode = 0
@@ -112,17 +109,16 @@ text = "Tutorial"
 layout_mode = 2
 tooltip_text = "An endless wave-based battle to test your alchemical configurations."
 theme = ExtResource("3_y151d")
-theme_override_fonts/font = ExtResource("2_ssnxx")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ww8po")
 action_mode = 0
 text = "Arena"
 
 [node name="TrainingButton" type="Button" parent="Main/GameModes"]
+visible = false
 layout_mode = 2
 tooltip_text = "Test out different alchemical spell combinations."
 theme = ExtResource("3_y151d")
-theme_override_fonts/font = ExtResource("2_ssnxx")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3w2ro")
 action_mode = 0
@@ -142,21 +138,24 @@ offset_bottom = -119.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 15
+alignment = 1
 
-[node name="TutorialButton2" type="Button" parent="Main/Configurations"]
+[node name="OptionsButton" type="Button" parent="Main/Configurations"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ssnxx")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wtv2x")
 action_mode = 0
 text = "Options"
 
-[node name="TutorialButton3" type="Button" parent="Main/Configurations"]
+[node name="ControlsButton" type="Button" parent="Main/Configurations"]
+visible = false
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ssnxx")
+size_flags_vertical = 4
 theme_override_font_sizes/font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_e8r2q")
 action_mode = 0
 text = "Controls"
 
 [connection signal="pressed" from="Main/GameModes/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="Main/GameModes/ArenaButton" to="." method="_on_arena_button_pressed"]
+[connection signal="pressed" from="Main/Configurations/OptionsButton" to="." method="_on_options_button_pressed"]

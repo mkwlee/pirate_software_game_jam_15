@@ -9,7 +9,7 @@ var direction : Vector2
 func _ready() -> void:
 	direction = global_position.direction_to(target).normalized()*SPEED
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	velocity = direction
 	move_and_slide()
 	for i in get_slide_collision_count():

@@ -9,8 +9,8 @@ var spell_a : Vector2i = Vector2i(-1, -1)
 var spell_b : Vector2i = Vector2i(-1, -1)
 
 
-var display_damage = false
-var unlocked_spells = [1, 1, 1, 1]
+var display_damage = true
+var unlocked_spells = [0, 0, 0, 0]
 
 var esc_menu : CanvasLayer = null
 # Called when the node enters the scene tree for the first time.
@@ -21,7 +21,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta) -> void:
-	if Input.is_action_just_pressed("esc"):
+	if Input.is_action_just_pressed("esc") and get_tree().current_scene.name != "MainMenu":
 		if esc_menu == null:
 			esc_menu = MENU.instantiate()
 			get_tree().current_scene.add_child(esc_menu)
@@ -41,18 +41,19 @@ func spawn_new_slimes(size_type, pos):
 				e.size_type = 0
 				e.global_position = pos
 				if x:
-					e.global_position += Vector2(3, 3)
+					e.global_position += Vector2(1, 1)
 				else:
-					e.global_position -= Vector2(3, 3)
+					e.global_position -= Vector2(1, 1)
 				get_tree().current_scene.add_child(e)
+				pass
 		2:
 			for x in range(0, 2):
 				var e = SLIME_ENEMY.instantiate()
 				e.size_type = 1
 				e.global_position = pos
 				if x:
-					e.global_position += Vector2(3, 3)
+					e.global_position += Vector2(1, 1)
 				else:
-					e.global_position -= Vector2(3, 3)
+					e.global_position -= Vector2(1, 1)
 				get_tree().current_scene.add_child(e)
 				pass

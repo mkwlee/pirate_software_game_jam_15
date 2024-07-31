@@ -1,8 +1,8 @@
 [gd_scene load_steps=24 format=3 uid="uid://86afed1f5fmg"]
 
-[ext_resource type="Texture2D" uid="uid://clbfmdihksi4c" path="res://assets/sprites/enemies/slime_sprite.png" id="1_lwwcx"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_w3vdh"]
 [ext_resource type="PackedScene" uid="uid://be0wi76cyky1g" path="res://scenes/enemies/enemy_hit_box.tscn" id="1_we2lt"]
+[ext_resource type="Texture2D" uid="uid://clbfmdihksi4c" path="res://assets/sprites/enemies/slime_sprite.png" id="2_4kfj6"]
 [ext_resource type="PackedScene" uid="uid://d82bocfp7dmk" path="res://scenes/enemies/enemy_hurt_box.tscn" id="2_c34va"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oxp1g"]
@@ -449,6 +449,8 @@ _data = {
 }
 
 [node name="SlimeEnemy" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 16
 motion_mode = 1
 wall_min_slide_angle = 0.0
@@ -459,7 +461,7 @@ size_type = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -5)
-texture = ExtResource("1_lwwcx")
+texture = ExtResource("2_4kfj6")
 hframes = 8
 
 [node name="EnemyHurtBox" parent="Sprite2D" instance=ExtResource("2_c34va")]

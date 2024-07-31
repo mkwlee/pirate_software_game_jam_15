@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://clmcmx6titcm3" path="res://scenes/player/player.tscn" id="2_wpa7u"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_qxyko"]
 [ext_resource type="PackedScene" uid="uid://b2vko30ofwo5" path="res://scenes/interfaces/game_ui.tscn" id="5_i24cy"]
-[ext_resource type="PackedScene" uid="uid://86afed1f5fmg" path="res://scenes/enemies/slime_enemy.tscn" id="6_p6ix0"]
 [ext_resource type="PackedScene" uid="uid://cgwo78mwwtw66" path="res://scenes/environment/cauldron.tscn" id="6_uywda"]
+[ext_resource type="PackedScene" uid="uid://86afed1f5fmg" path="res://scenes/enemies/slime_enemy.tscn" id="9_mkq3i"]
 
 [node name="TestWorld" type="Node2D"]
 y_sort_enabled = true
@@ -30,8 +30,7 @@ unique_name_in_owner = true
 [node name="Cauldron" parent="." instance=ExtResource("6_uywda")]
 position = Vector2(35, 34)
 
-[node name="SlimeEnemy" parent="." instance=ExtResource("6_p6ix0")]
-position = Vector2(39, -31)
-size_type = 2
+[node name="SlimeEnemy" parent="." instance=ExtResource("9_mkq3i")]
+position = Vector2(34, -51)
 
 [connection signal="health_change_signal" from="Player" to="GUI" method="_on_player_health_change_signal"]

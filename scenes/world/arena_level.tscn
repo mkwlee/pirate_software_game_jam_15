@@ -72,9 +72,8 @@ text = "Enemies
 horizontal_alignment = 1
 
 [node name="RoundStartTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
 one_shot = true
-autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_i7tyd")
@@ -87,6 +86,12 @@ offset_right = 626.0
 offset_bottom = 302.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="LeftSpell" type="Marker2D" parent="."]
+position = Vector2(-15, -15)
+
+[node name="RightSpell" type="Marker2D" parent="."]
+position = Vector2(15, -15)
 
 [connection signal="health_change_signal" from="Player" to="GUI" method="_on_player_health_change_signal"]
 [connection signal="timeout" from="RoundStartTimer" to="." method="_on_round_start_timer_timeout"]

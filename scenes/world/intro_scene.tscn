@@ -342,6 +342,7 @@ libraries = {
 "": SubResource("AnimationLibrary_lgvpc")
 }
 autoplay = "intro"
+speed_scale = 1.5
 
 [node name="Label" type="Label" parent="."]
 visible = false

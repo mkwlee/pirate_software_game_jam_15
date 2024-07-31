@@ -488,6 +488,8 @@ _data = {
 }
 
 [node name="CyprusEnemy" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 collision_layer = 16
 motion_mode = 1
 wall_min_slide_angle = 0.0
