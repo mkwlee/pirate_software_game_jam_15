@@ -16,7 +16,7 @@ var health_bar : Node2D = null
 
 func _physics_process(_delta) -> void:
 
-	velocity = knockback_speed
+	velocity += knockback_speed
 	move_and_slide()
 	if knockback_speed:
 		knockback_speed.x = lerp(knockback_speed.x, 0.0, 0.1)

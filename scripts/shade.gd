@@ -3,7 +3,7 @@ extends CharacterBody2D
 @onready var damage_player: AnimationPlayer = $DamagePlayer
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 @onready var behavior_player: AnimationPlayer = $BehaviorPlayer
-@onready var player: CharacterBody2D = %Player
+@onready var player: CharacterBody2D
 @onready var enemy_detection_ray: RayCast2D = $EnemyDetectionRay
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var enemy_hurt_box = $Sprite2D/EnemyHurtBox
@@ -35,6 +35,7 @@ func _ready() -> void:
 	spawn_area.append(Vector2(global_position.x-30, global_position.y-30))
 	spawn_area.append(Vector2(global_position.x+30, global_position.y+30))
 	behavior_player.play("WANDER")
+	player = get_tree().current_scene.find_child("Player")
 
 func _physics_process(_delta) -> void:
 	match ACTION:

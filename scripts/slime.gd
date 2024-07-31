@@ -10,6 +10,8 @@ const HEALTH_INDICATOR = preload("res://scenes/enemies/health_indicator.tscn")
 @onready var animation_player = $AnimationPlayer
 @onready var enemy_detection_ray = $EnemyDetectionRay
 @onready var enemy_hurt_box = $Sprite2D/EnemyHurtBox
+@onready var enemy_hit_box: Area2D = $EnemyHitBox
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
 
@@ -17,7 +19,7 @@ const HEALTH_INDICATOR = preload("res://scenes/enemies/health_indicator.tscn")
 @export var HEALTH : int
 
 #State based
-enum STATE {IDLE, WANDER, FOLLOW, ATTACK, STAGGER, DYING}
+enum STATE {IDLE, WANDER, FOLLOW, STAGGER, DYING}
 @export var ACTION = STATE.IDLE
 var PREV_ACTION = STATE.IDLE
 
@@ -28,9 +30,30 @@ var health_bar : Node2D = null
 var spawn_area : Array
 var wander_target : Vector2
 
+@export var can_move : bool = false
+@export var size_type : int = 1
+
 func _ready() -> void:
-	spawn_area.append(Vector2(global_position.x-50, global_position.y-50))
-	spawn_area.append(Vector2(global_position.x+50, global_position.y+50))
+	match size_type:
+		0:
+			sprite.scale = Vector2(0.5, 0.5)
+			enemy_hit_box.scale = Vector2(0.5, 0.5)
+			enemy_hit_box.position = Vector2(0, -4)
+			collision_shape.position = Vector2(0, -3)
+			SPEED *= 2
+			enemy_hurt_box.DAMAGE *= 0.5
+		1:
+			pass
+		2:
+			sprite.scale = Vector2(2, 2)
+			enemy_hit_box.scale = Vector2(2, 2)
+			enemy_hit_box.position = Vector2(0, -1)
+			collision_shape.position = Vector2(0, 4)
+			SPEED /= 2
+			enemy_hurt_box.DAMAGE *= 2
+			
+	spawn_area.append(Vector2(global_position.x-30, global_position.y-30))
+	spawn_area.append(Vector2(global_position.x+30, global_position.y+30))
 	behavior_player.play("WANDER")
 	player = get_tree().current_scene.find_child("Player")
 	
@@ -41,10 +64,10 @@ func _physics_process(_delta) -> void:
 		STATE.WANDER:
 			var dir = to_local(nav.get_next_path_position()).normalized()
 			if dir.x > 0:
-				sprite.scale.x = 1
+				sprite.scale.x = abs(sprite.scale.x)
 			elif dir.x < 0:
-				sprite.scale.x = -1
-			velocity = (dir * SPEED)
+				sprite.scale.x = -abs(sprite.scale.x)
+			velocity = (dir * SPEED * int(can_move))
 			
 			if global_position.distance_to(player.global_position) < 150:
 				enemy_detection_ray.enabled = true
@@ -62,34 +85,21 @@ func _physics_process(_delta) -> void:
 		STATE.FOLLOW:
 			var dir = to_local(nav.get_next_path_position()).normalized()
 			if dir.x > 0:
-				sprite.scale.x = 1
+				sprite.scale.x = abs(sprite.scale.x)
 			elif dir.x < 0:
-				sprite.scale.x = -1
-			velocity = (dir * SPEED)
+				sprite.scale.x = -abs(sprite.scale.x)
+			velocity = (dir * SPEED * int(can_move))
 			
 			if behavior_player.current_animation != "STAGGER":
 				if global_position.distance_to(player.global_position) > 200: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
-				elif global_position.distance_to(player.global_position) < 50: 
-					enemy_detection_ray.enabled = true
-					enemy_detection_ray.target_position = to_local(player.global_position)
-					if enemy_detection_ray.is_colliding():
-						if enemy_detection_ray.get_collider().is_in_group("Player"):
-							enemy_detection_ray.enabled = false
-							enemy_detection_ray.target_position = Vector2(0, 0)
-							behavior_player.play("ATTACK")
 				else:
 					behavior_player.play("FOLLOW")
-		STATE.ATTACK:
-			var dir = wander_target
-			velocity = (dir * SPEED*2)
-			
-			if is_on_wall():
-				behavior_player.play("WANDER")
 		STATE.STAGGER:
 			velocity = Vector2(0, 0)
 			if not behavior_player.is_playing():
+				
 				ACTION = PREV_ACTION
 				match ACTION:
 					STATE.IDLE:
@@ -98,8 +108,6 @@ func _physics_process(_delta) -> void:
 						behavior_player.play("WANDER")
 					STATE.FOLLOW:
 						behavior_player.play("FOLLOW")
-					STATE.ATTACK:
-						behavior_player.play("ATTACK")
 	
 
 	velocity += knockback_speed
@@ -131,9 +139,9 @@ func wander() -> void:
 	nav.target_position = wander_target
 	var dir = to_local(nav.get_next_path_position()).normalized()
 	if dir.x > 0:
-		sprite.scale.x = 1
+		sprite.scale.x = abs(sprite.scale.x)
 	elif dir.x < 0:
-		sprite.scale.x = -1
+		sprite.scale.x = -abs(sprite.scale.x)
 		
 func follow() -> void:
 	wander_target = player.global_position
@@ -152,6 +160,8 @@ func stagger() -> void:
 	velocity = Vector2(0, 0)
 
 func _on_enemy_hurt_box_area_entered(area) -> void:
-	if ACTION == STATE.ATTACK:
-		if area.is_in_group("Player"):
-			enemy_hurt_box.hurtbox_activate()
+	if area.is_in_group("Player"):
+		enemy_hurt_box.hurtbox_activate()
+		
+func death_split():
+	GameManager.spawn_new_slimes(size_type, global_position)

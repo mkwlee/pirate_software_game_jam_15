@@ -1,15 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://clu72dc08mw27"]
+[gd_scene load_steps=23 format=3 uid="uid://bi0ba43jsy6fd"]
 
-[ext_resource type="Script" path="res://scripts/slime.gd" id="1_tqstk"]
-[ext_resource type="Texture2D" uid="uid://b6k34xq5xbyxx" path="res://assets/sprites/enemies/bat_sprite.png" id="2_5fhcv"]
-[ext_resource type="PackedScene" uid="uid://be0wi76cyky1g" path="res://scenes/enemies/enemy_hit_box.tscn" id="3_nhwud"]
-[ext_resource type="PackedScene" uid="uid://d82bocfp7dmk" path="res://scenes/enemies/enemy_hurt_box.tscn" id="3_uom2p"]
+[ext_resource type="Script" path="res://scripts/cyprus.gd" id="1_s2qtf"]
+[ext_resource type="Texture2D" uid="uid://kqveqphgg1je" path="res://assets/sprites/enemies/cyprus_sprite.png" id="2_51chl"]
+[ext_resource type="PackedScene" uid="uid://be0wi76cyky1g" path="res://scenes/enemies/enemy_hit_box.tscn" id="3_ghkaj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_corjh"]
-size = Vector2(4, 11)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_xc1kh"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_xa3gr"]
 radius = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qec8j"]
+size = Vector2(8, 8)
 
 [sub_resource type="Animation" id="Animation_dlh25"]
 length = 0.001
@@ -358,7 +357,7 @@ _data = {
 "WANDER": SubResource("Animation_dkhwp")
 }
 
-[sub_resource type="Animation" id="Animation_b6j0e"]
+[sub_resource type="Animation" id="Animation_6y7ci"]
 resource_name = "ATTACK"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -373,7 +372,7 @@ tracks/0/keys = {
 "values": [3, 4, 5, 6, 5, 3, 1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_cnqv2"]
+[sub_resource type="Animation" id="Animation_mcrnh"]
 resource_name = "DYING"
 length = 0.6
 tracks/0/type = "value"
@@ -389,7 +388,7 @@ tracks/0/keys = {
 "values": [5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_4y38x"]
+[sub_resource type="Animation" id="Animation_hmadk"]
 resource_name = "FOLLOW"
 length = 0.6
 loop_mode = 1
@@ -406,8 +405,8 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
-[sub_resource type="Animation" id="Animation_6j53h"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_cya2o"]
+resource_name = "RESET"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -420,8 +419,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:can_move")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
-[sub_resource type="Animation" id="Animation_4h0vp"]
+[sub_resource type="Animation" id="Animation_gymb3"]
 resource_name = "STAGGER"
 length = 0.5
 tracks/0/type = "value"
@@ -434,12 +445,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [7, 0]
+"values": [3, 0]
 }
 
-[sub_resource type="Animation" id="Animation_4r3fq"]
+[sub_resource type="Animation" id="Animation_r5ske"]
 resource_name = "WANDER"
-length = 0.6
+length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -448,52 +459,57 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2]
+"values": [0, 1, 2, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:can_move")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdcoy"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jgstc"]
 _data = {
-"ATTACK": SubResource("Animation_b6j0e"),
-"DYING": SubResource("Animation_cnqv2"),
-"FOLLOW": SubResource("Animation_4y38x"),
-"RESET": SubResource("Animation_6j53h"),
-"STAGGER": SubResource("Animation_4h0vp"),
-"WANDER": SubResource("Animation_4r3fq")
+"ATTACK": SubResource("Animation_6y7ci"),
+"DYING": SubResource("Animation_mcrnh"),
+"FOLLOW": SubResource("Animation_hmadk"),
+"RESET": SubResource("Animation_cya2o"),
+"STAGGER": SubResource("Animation_gymb3"),
+"WANDER": SubResource("Animation_r5ske")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6o61g"]
-size = Vector2(12, 11)
-
-[node name="BatEnemy" type="CharacterBody2D"]
-z_index = 1
-y_sort_enabled = true
+[node name="CyprusEnemy" type="CharacterBody2D"]
 collision_layer = 16
 motion_mode = 1
 wall_min_slide_angle = 0.0
-script = ExtResource("1_tqstk")
-SPEED = 30
-HEALTH = 50
+script = ExtResource("1_s2qtf")
+SPEED = 15
+HEALTH = 75
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -2)
-texture = ExtResource("2_5fhcv")
-hframes = 8
-
-[node name="EnemyHurtBox" parent="Sprite2D" instance=ExtResource("3_uom2p")]
-position = Vector2(8, 0)
-DAMAGE = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/EnemyHurtBox"]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_corjh")
-debug_color = Color(0.498039, 0, 0, 0.419608)
+position = Vector2(0, -4)
+texture = ExtResource("2_51chl")
+hframes = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("CircleShape2D_xc1kh")
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_xa3gr")
+
+[node name="EnemyHitBox" parent="." instance=ExtResource("3_ghkaj")]
+position = Vector2(0, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
+shape = SubResource("RectangleShape2D_qec8j")
+debug_color = Color(0, 0.63754, 0.390731, 0.42)
 
 [node name="DamagePlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -507,7 +523,7 @@ libraries = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_tdcoy")
+"": SubResource("AnimationLibrary_jgstc")
 }
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
@@ -519,12 +535,3 @@ position = Vector2(0, -5)
 target_position = Vector2(0, 0)
 collision_mask = 3
 collide_with_areas = true
-
-[node name="EnemyHitBox" parent="." instance=ExtResource("3_nhwud")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
-position = Vector2(0, -2.5)
-shape = SubResource("RectangleShape2D_6o61g")
-debug_color = Color(0, 0.63754, 0.390731, 0.42)
-
-[connection signal="area_entered" from="Sprite2D/EnemyHurtBox" to="." method="_on_enemy_hurt_box_area_entered"]

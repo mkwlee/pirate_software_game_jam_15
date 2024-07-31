@@ -1,16 +1,15 @@
 extends CharacterBody2D
 
 const HEALTH_INDICATOR = preload("res://scenes/enemies/health_indicator.tscn")
+const CYPRUS_PROJECTILE = preload("res://scenes/enemies/cyprus_projectile.tscn")
 
 @onready var damage_player: AnimationPlayer = $DamagePlayer
-@onready var player: CharacterBody2D
+@onready var player
 @onready var sprite = $Sprite2D
 @onready var nav= $NavigationAgent2D
 @onready var behavior_player = $BehaviorPlayer
 @onready var animation_player = $AnimationPlayer
 @onready var enemy_detection_ray = $EnemyDetectionRay
-@onready var enemy_hurt_box = $Sprite2D/EnemyHurtBox
-
 
 
 @export var SPEED : int
@@ -21,19 +20,20 @@ enum STATE {IDLE, WANDER, FOLLOW, ATTACK, STAGGER, DYING}
 @export var ACTION = STATE.IDLE
 var PREV_ACTION = STATE.IDLE
 
+var spawn_area : Array
+var wander_target : Vector2
+
+
 var can_stagger = true
 var knockback_speed = Vector2(0, 0)
 var health_bar : Node2D = null
 
-var spawn_area : Array
-var wander_target : Vector2
-
 func _ready() -> void:
-	spawn_area.append(Vector2(global_position.x-50, global_position.y-50))
-	spawn_area.append(Vector2(global_position.x+50, global_position.y+50))
+	spawn_area.append(Vector2(global_position.x-20, global_position.y-20))
+	spawn_area.append(Vector2(global_position.x+20, global_position.y+20))
 	behavior_player.play("WANDER")
 	player = get_tree().current_scene.find_child("Player")
-	
+
 func _physics_process(_delta) -> void:
 	match ACTION:
 		STATE.IDLE:
@@ -55,7 +55,6 @@ func _physics_process(_delta) -> void:
 						enemy_detection_ray.target_position = Vector2(0, 0)
 						behavior_player.play("FOLLOW")
 			
-			
 			if global_position.distance_to(wander_target) < 20:
 				behavior_player.play("WANDER")
 			pass
@@ -71,7 +70,7 @@ func _physics_process(_delta) -> void:
 				if global_position.distance_to(player.global_position) > 200: 
 					enemy_detection_ray.enabled = false
 					behavior_player.play("WANDER")
-				elif global_position.distance_to(player.global_position) < 50: 
+				elif global_position.distance_to(player.global_position) < 80: 
 					enemy_detection_ray.enabled = true
 					enemy_detection_ray.target_position = to_local(player.global_position)
 					if enemy_detection_ray.is_colliding():
@@ -81,12 +80,10 @@ func _physics_process(_delta) -> void:
 							behavior_player.play("ATTACK")
 				else:
 					behavior_player.play("FOLLOW")
+			pass
 		STATE.ATTACK:
-			var dir = wander_target
-			velocity = (dir * SPEED*2)
-			
-			if is_on_wall():
-				behavior_player.play("WANDER")
+			velocity = Vector2(0, 0)
+			pass
 		STATE.STAGGER:
 			velocity = Vector2(0, 0)
 			if not behavior_player.is_playing():
@@ -100,13 +97,16 @@ func _physics_process(_delta) -> void:
 						behavior_player.play("FOLLOW")
 					STATE.ATTACK:
 						behavior_player.play("ATTACK")
-	
+			pass
+		STATE.DYING:
+			pass
 
 	velocity += knockback_speed
 	move_and_slide()
 	if knockback_speed:
 		knockback_speed.x = lerp(knockback_speed.x, 0.0, 0.1)
 		knockback_speed.y = lerp(knockback_speed.y, 0.0, 0.1)
+
 
 func take_damage(damage) -> void:
 	if ACTION != STATE.DYING:
@@ -117,13 +117,6 @@ func take_damage(damage) -> void:
 		HEALTH -= damage
 		health_bar.change_health(-damage)
 		
-func is_dead() -> void:
-	if HEALTH < 1:
-		health_bar.queue_free()
-		velocity = Vector2(0, 0)
-		knockback_speed = Vector2(0, 0)
-		behavior_player.play("DYING")
-
 func wander() -> void:
 	var target_x = randi_range(spawn_area[0].x, spawn_area[1].x)
 	var target_y = randi_range(spawn_area[0].y, spawn_area[1].y)
@@ -140,18 +133,19 @@ func follow() -> void:
 	nav.target_position = wander_target
 
 func attack() -> void:
-	wander_target = player.global_position
-	wander_target = global_position.direction_to(wander_target).normalized()
-	if wander_target.x > 0:
-		sprite.scale.x = 1
-	elif wander_target.x < 0:
-		sprite.scale.x = -1
-	
+	var proj = CYPRUS_PROJECTILE.instantiate()
+	proj.target = player.global_position
+	proj.global_position = global_position
+	get_tree().current_scene.add_child(proj)
+	pass
+
 func stagger() -> void:
 	PREV_ACTION = ACTION
 	velocity = Vector2(0, 0)
 
-func _on_enemy_hurt_box_area_entered(area) -> void:
-	if ACTION == STATE.ATTACK:
-		if area.is_in_group("Player"):
-			enemy_hurt_box.hurtbox_activate()
+func is_dead() -> void:
+	if HEALTH < 1:
+		health_bar.queue_free()
+		velocity = Vector2(0, 0)
+		knockback_speed = Vector2(0, 0)
+		behavior_player.play("DYING")

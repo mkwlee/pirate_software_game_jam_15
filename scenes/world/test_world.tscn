@@ -1,13 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://h108jra3ongd"]
+[gd_scene load_steps=7 format=3 uid="uid://h108jra3ongd"]
 
 [ext_resource type="PackedScene" uid="uid://cfbc6ltchrnt2" path="res://scenes/environment/tile_map.tscn" id="1_t66wi"]
 [ext_resource type="PackedScene" uid="uid://clmcmx6titcm3" path="res://scenes/player/player.tscn" id="2_wpa7u"]
-[ext_resource type="PackedScene" uid="uid://c5v301fqi7c4p" path="res://scenes/enemies/test_dummy.tscn" id="2_xqcnp"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_qxyko"]
 [ext_resource type="PackedScene" uid="uid://b2vko30ofwo5" path="res://scenes/interfaces/game_ui.tscn" id="5_i24cy"]
+[ext_resource type="PackedScene" uid="uid://86afed1f5fmg" path="res://scenes/enemies/slime_enemy.tscn" id="6_p6ix0"]
 [ext_resource type="PackedScene" uid="uid://cgwo78mwwtw66" path="res://scenes/environment/cauldron.tscn" id="6_uywda"]
-[ext_resource type="PackedScene" uid="uid://bm31lnqmha3u6" path="res://scenes/enemies/shade_enemy.tscn" id="8_6eg11"]
-[ext_resource type="PackedScene" uid="uid://clu72dc08mw27" path="res://scenes/enemies/bat_enemy.tscn" id="8_k6pjn"]
 
 [node name="TestWorld" type="Node2D"]
 y_sort_enabled = true
@@ -29,34 +27,11 @@ script = ExtResource("3_qxyko")
 [node name="GUI" parent="." instance=ExtResource("5_i24cy")]
 unique_name_in_owner = true
 
-[node name="TestDummy" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(57, -2)
-
-[node name="TestDummy2" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(15, -44)
-
-[node name="TestDummy3" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(0, 37)
-
-[node name="TestDummy4" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(-58, -7)
-
-[node name="TestDummy5" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(74, -4)
-
-[node name="TestDummy6" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(109, -20)
-
-[node name="TestDummy7" parent="." instance=ExtResource("2_xqcnp")]
-position = Vector2(106, -3)
-
 [node name="Cauldron" parent="." instance=ExtResource("6_uywda")]
 position = Vector2(35, 34)
 
-[node name="ShadeEnemy" parent="." instance=ExtResource("8_6eg11")]
-position = Vector2(36, -28)
-
-[node name="BatEnemy" parent="." instance=ExtResource("8_k6pjn")]
-position = Vector2(-44, 18)
+[node name="SlimeEnemy" parent="." instance=ExtResource("6_p6ix0")]
+position = Vector2(39, -31)
+size_type = 2
 
 [connection signal="health_change_signal" from="Player" to="GUI" method="_on_player_health_change_signal"]

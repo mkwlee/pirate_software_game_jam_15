@@ -17,6 +17,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if in_cauldron:
 		%GUI.set_spell_slots()
+		in_cauldron = false
 		
 	if Input.is_action_just_pressed("interact") and interactable == true:
 		in_cauldron = true

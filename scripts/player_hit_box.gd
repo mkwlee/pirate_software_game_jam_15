@@ -1,5 +1,7 @@
 extends Area2D
 
+@export var IMMUNITY : bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,4 +13,5 @@ func _process(_delta: float) -> void:
 	pass
 
 func take_damage(damage):
-	get_parent().change_health(-damage)
+	if not IMMUNITY:
+		get_parent().change_health(-damage)
